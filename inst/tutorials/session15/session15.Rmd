@@ -1,5 +1,5 @@
 ---
-title: "dartRverse"
+title: "Relatedness - an introduction in dartR"
 author: "The dartR Team"
 date: | 
     ![](images/dartR7.png){width=6cm}

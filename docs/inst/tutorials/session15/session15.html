@@ -9,7 +9,7 @@
 <meta name="author" content="The dartR Team">
 <meta name="description" content="Kioloa2 Relatedness Tutorial">
 
-<title>Analysing Genomic Data with dartRverse - 4&nbsp; dartRverse</title>
+<title>Analysing Genomic Data with dartRverse - 4&nbsp; Relatedness - an introduction in dartR</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../inst/tutorials/session15/session15.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">dartRverse</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../inst/tutorials/session15/session15.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Relatedness - an introduction in dartR</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -167,7 +167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../inst/tutorials/session15/session15.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">dartRverse</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Relatedness - an introduction in dartR</span></span></a>
   </div>
 </li>
     </ul>
@@ -184,7 +184,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link" data-scroll-target="#learning-outcomes">Learning outcomes</a></li>
   </ul></li>
-  <li><a href="#introduction-to-genetic-relatedness" id="toc-introduction-to-genetic-relatedness" class="nav-link" data-scroll-target="#introduction-to-genetic-relatedness">Introduction to Genetic relatedness</a></li>
+  <li><a href="#introduction-to-genetic-relatedness" id="toc-introduction-to-genetic-relatedness" class="nav-link" data-scroll-target="#introduction-to-genetic-relatedness">Introduction to Genetic relatedness</a>
+  <ul>
+  <li><a href="#tutorial-introduction" id="toc-tutorial-introduction" class="nav-link" data-scroll-target="#tutorial-introduction">Tutorial introduction</a></li>
+  <li><a href="#methods-of-estimating-relatedness" id="toc-methods-of-estimating-relatedness" class="nav-link" data-scroll-target="#methods-of-estimating-relatedness">Methods of estimating relatedness</a></li>
+  <li><a href="#additive-genetic-relatedness-methods" id="toc-additive-genetic-relatedness-methods" class="nav-link" data-scroll-target="#additive-genetic-relatedness-methods">1. Additive genetic relatedness methods</a></li>
+  <li><a href="#additive-genetic-relatedness-and-two-and-four-gene-coefficients" id="toc-additive-genetic-relatedness-and-two-and-four-gene-coefficients" class="nav-link" data-scroll-target="#additive-genetic-relatedness-and-two-and-four-gene-coefficients">2. Additive genetic relatedness and two and four gene coefficients</a></li>
+  <li><a href="#emibd9" id="toc-emibd9" class="nav-link" data-scroll-target="#emibd9">3. EMIBD9</a></li>
+  </ul></li>
   <li><a href="#introduction-to-relatedness-in-dartr" id="toc-introduction-to-relatedness-in-dartr" class="nav-link" data-scroll-target="#introduction-to-relatedness-in-dartr">Introduction to relatedness in dartR</a>
   <ul>
   <li><a href="#intro" id="toc-intro" class="nav-link" data-scroll-target="#intro">Intro</a></li>
@@ -200,6 +207,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#running-a-simulation" id="toc-running-a-simulation" class="nav-link" data-scroll-target="#running-a-simulation">Running a simulation</a>
   <ul>
+  <li><a href="#brief-overview-of-reference-and-simulation-parameters." id="toc-brief-overview-of-reference-and-simulation-parameters." class="nav-link" data-scroll-target="#brief-overview-of-reference-and-simulation-parameters.">Brief overview of Reference and Simulation parameters.</a>
+  <ul class="collapse">
+  <li><a href="#chromosome-lengthchunk" id="toc-chromosome-lengthchunk" class="nav-link" data-scroll-target="#chromosome-lengthchunk">Chromosome length/chunk</a></li>
+  <li><a href="#simulation-variables" id="toc-simulation-variables" class="nav-link" data-scroll-target="#simulation-variables">Simulation variables</a></li>
+  </ul></li>
   <li><a href="#your-first-simulation-run" id="toc-your-first-simulation-run" class="nav-link" data-scroll-target="#your-first-simulation-run">Your first simulation run</a></li>
   <li><a href="#accessing-your-sim-object" id="toc-accessing-your-sim-object" class="nav-link" data-scroll-target="#accessing-your-sim-object">Accessing your sim object</a></li>
   </ul></li>
@@ -225,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#related-analysis" id="toc-related-analysis" class="nav-link" data-scroll-target="#related-analysis">Related analysis</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#colony---inference" id="toc-colony---inference" class="nav-link" data-scroll-target="#colony---inference">COLONY - inference</a>
+  <li><a href="#inferring-an-unknown-relative---colony" id="toc-inferring-an-unknown-relative---colony" class="nav-link" data-scroll-target="#inferring-an-unknown-relative---colony">Inferring an unknown relative - COLONY</a>
   <ul>
   <li><a href="#the-problem" id="toc-the-problem" class="nav-link" data-scroll-target="#the-problem">The problem</a></li>
   <li><a href="#generating-a-paternal-genotype-with-colony" id="toc-generating-a-paternal-genotype-with-colony" class="nav-link" data-scroll-target="#generating-a-paternal-genotype-with-colony">Generating a paternal genotype with COLONY</a>
@@ -233,6 +245,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reading-in-the-data" id="toc-reading-in-the-data" class="nav-link" data-scroll-target="#reading-in-the-data">1. Reading in the data</a></li>
   <li><a href="#filtering" id="toc-filtering" class="nav-link" data-scroll-target="#filtering">2. Filtering</a></li>
   <li><a href="#downloading-and-preparing-colony" id="toc-downloading-and-preparing-colony" class="nav-link" data-scroll-target="#downloading-and-preparing-colony">4. Downloading and preparing COLONY</a></li>
+  <li><a href="#preparing-data" id="toc-preparing-data" class="nav-link" data-scroll-target="#preparing-data">5. Preparing data</a></li>
+  <li><a href="#finding-the-father-in-the-population" id="toc-finding-the-father-in-the-population" class="nav-link" data-scroll-target="#finding-the-father-in-the-population">6. Finding the father in the population</a></li>
+  <li><a href="#x.-simulation-run---dont-think-is-neccessary---might-remove" id="toc-x.-simulation-run---dont-think-is-neccessary---might-remove" class="nav-link" data-scroll-target="#x.-simulation-run---dont-think-is-neccessary---might-remove">X. Simulation run - dont think is neccessary - might remove</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -243,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">dartRverse</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Relatedness - an introduction in dartR</span></h1>
 </div>
 
 
@@ -280,7 +295,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="calculating-relatedness-and-the-concept-of-identical-by-descent-ibd" class="level2">
 <h2 class="anchored" data-anchor-id="calculating-relatedness-and-the-concept-of-identical-by-descent-ibd">Calculating Relatedness and the concept of Identical by Descent (IBD)</h2>
-<p><em>Session Presenters</em></p>
+<p>Session Presenters</p>
 <p><img src="images/Ethan_image.png" class="img-fluid" style="width:30.0%"> - Ethan Halford</p>
 <hr>
 <section id="learning-outcomes" class="level3">
@@ -290,41 +305,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="introduction-to-genetic-relatedness" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-to-genetic-relatedness">Introduction to Genetic relatedness</h2>
-<p>Tutorial introduction</p>
-<p><em>Parentage analysis is highly useful for the estimation of relatedness across a variety of fields including – conservation, agriculture and human genomics. It provides a succinct and highly accurate way of measuring a variety of forces including sexual selection, effective population size, speciation and natural selection.</em></p>
-<p><em>Estimating how related two individuals are is fundamental in ecological restoration, biodiversity conservation and agricultural settings, providing an important metric in the management of breeding programs, small populations, and for providing understanding of mating dynamics, inbreeding and a host of other key parameters.</em></p>
-<p><em>The basis for the most popular estimators is the concept of identical by descent – or IBD in which two alleles are identical if they are copies of the same allele found in a reference population. Relatedness between two individuals is therefore equal to the proportion of alleles shared between them which are IBD. Kinship, which is a similar measure – is the probability that two alleles, one taken from each individual, are IBD . As such, kinship is equal to half the relatedness value for any two individuals – given that it considers ….. As described in wang (X year), we summarise….</em></p>
+<section id="tutorial-introduction" class="level4">
+<h4 class="anchored" data-anchor-id="tutorial-introduction">Tutorial introduction</h4>
+<p>Parentage analysis is highly useful for the estimation of relatedness across a variety of fields including – conservation, agriculture and human genomics. It provides a succinct and highly accurate way of measuring a variety of forces including sexual selection, effective population size, speciation and natural selection.</p>
+<p>The ability to estimate relatedness is a highly useful tool and sees use across a variety of fields, including but not limited to: conservation, agriculture and human genomics. In estimating relatedness, one can succinctly and accurately measure a variety of genetic forces that may be at play within a population, such as: sexual selection, effective population size, speciation and natural selection.</p>
+<p>Estimating how related two individuals are is fundamental in ecological restoration, biodiversity conservation and agricultural settings, providing an important metric in the management of breeding programs, small populations, and for providing understanding of mating dynamics, inbreeding and a host of other key parameters.</p>
+<p>The basis for the most popular estimators is the concept of identical by descent – or IBD; in which two alleles are identical if they are copies of the same allele found in a reference population. Relatedness between two individuals is therefore equal to the proportion of alleles shared between them which are IBD. Kinship, which is a similar measure – is the probability that two alleles, one taken from each individual, are IBD . As such, kinship is equal to half the relatedness value for any two individuals – given that it considers ….. As described in wang (X year), we summarise….</p>
 <hr>
-<p>Methods of estimating relatedness</p>
-<p><em>Oliehoek et al (2005) summarized contemporary methods as being categorized into 3 distinct groups:</em></p>
-<pre><code>1. Those using relationship between additive genetic relatedness – r, population genetic co-ancestry and molecular co-ancestry.
-2. Those using the relationship between additive genetic relatedness and two gene and four gene coefficients of identity in “non-inbred” populations and consists of Wang (2002) and Lynch and Ritland (1999) and its associated spin offs
-3. Queller and Goodnight</code></pre>
-<p><em>However for the purposes of a general introduction we only focus on the first two, with the addition of Jinliang Wang’s most recent estimator - EMIBD9.</em></p>
+</section>
+<section id="methods-of-estimating-relatedness" class="level4">
+<h4 class="anchored" data-anchor-id="methods-of-estimating-relatedness">Methods of estimating relatedness</h4>
+<p>Oliehoek et al (2005) summarized contemporary methods as being categorized into 3 distinct groups:</p>
+<p>There are a variety of methods for estimating relatedness, however we will focus on 3 distinct methods, as described by Oliehoek et al; those being:</p>
 <ol type="1">
-<li>Additive genetic relatedness methods</li>
+<li><strong>Those using relationship between additive genetic relatedness – r, population genetic co-ancestry and molecular co-ancestry.</strong><br>
+</li>
+<li><strong>Those using the relationship between additive genetic relatedness and two gene and four gene coefficients of identity in “non-inbred” populations and consists of Wang (2002) and Lynch and Ritland (1999) and its associated spin offs</strong><br>
+</li>
+<li><strong>Queller and Goodnight</strong><br>
+</li>
 </ol>
-<p><em>As described above – these estimators make use of estimates of coancestry – or the probability that two alleles drawn at random one from each individual – are IBD. Coancestry and relatedness are expressed relative to a base population – in which no alleles are IBD, hence the co-ancestry between founders is 0. These estimators - make use of the molecular similarity index - referring to a single locus in a pair of individuals - defined as the probability that two marker alleles drawn from two individuals are IBD. Alleles that are molecularly identical in the base population are deemed alike in state (AIS). Problems arise when estimating the allele frequencies for the base population - from which all other estimates are drawn. If the average level of AIS is incorrectly estimated - then resulting estimated will be biased accordingly. If it is underestimated - then the “further back” in time the base population is set - leading to an increase in related estimates. The inverse is also true - an overestimation of AIS will result in an underestimating of relatedness. An example is setting the base population equal to the current population - resulting in negative estimates for some pairs of individuals.</em></p>
+<p>However for the purposes of a general introduction we only focus on the first two, with the addition of Jinliang Wang’s most recent estimator - EMIBD9.</p>
+</section>
+<section id="additive-genetic-relatedness-methods" class="level4">
+<h4 class="anchored" data-anchor-id="additive-genetic-relatedness-methods">1. Additive genetic relatedness methods</h4>
+<p>As described above – these estimators make use of estimates of coancestry – or the probability that two alleles drawn at random, one from each individual, – are IBD. Coancestry and relatedness are expressed relative to a base population – in which no alleles are IBD, hence the co-ancestry between founders is 0.</p>
+<p>These estimators - make use of the molecular similarity index - referring to a single locus in a pair of individuals - defined as the probability that two marker alleles drawn from two individuals are IBD. Alleles that are molecularly identical in the base population are deemed alike in state (AIS).</p>
+<p>Problems arise when estimating the allele frequencies for the base population - from which all other estimates are drawn. If the average level of AIS is incorrectly estimated - the resulting estimate will be biased accordingly. If it is underestimated - then the “further back” in time the base population is set - leading to an increase in estimated relatedness.</p>
+<p>The inverse is also true - an overestimation of AIS will result in an underestimating of relatedness. An example is setting the base population equal to the current population - resulting in negative estimates for some pairs of individuals.</p>
 <hr>
-<ol start="2" type="1">
-<li>Additive genetic relatedness and two and four gene coefficients</li>
-</ol>
-<p><em>These estimators consider instead the relationship between relatedness and the two and four gene coefficients of identity in non-inbred populations. Lynch and Ritland developed an estimator based on regression of genotype probabilities of one individual on genotype of the other individual of a pair. Thus these include the probability that at a certain locus - a single allele in individual x is IBD to a single allele in individual y and also the probability that both alleles in individual x are IBD to both alleles in individual y.</em></p>
+</section>
+<section id="additive-genetic-relatedness-and-two-and-four-gene-coefficients" class="level4">
+<h4 class="anchored" data-anchor-id="additive-genetic-relatedness-and-two-and-four-gene-coefficients">2. Additive genetic relatedness and two and four gene coefficients</h4>
+<p>These estimators consider instead the relationship between relatedness and the two and four gene coefficients of identity in non-inbred populations. Lynch and Ritland developed an estimator based on regression of genotype probabilities of one individual on genotype of the other individual of a pair. Thus these include the probability that at a certain locus - a single allele in individual x is IBD to a single allele in individual y and also the probability that both alleles in individual x are IBD to both alleles in individual y.</p>
 <hr>
-<ol start="3" type="1">
-<li>EMIBD9</li>
-</ol>
-<p><em>The EMIBD9 estimator differs from those previously mentioned – given it use of a maximum likelihood method. In particular it uses the estimation of 9 condensed modes of IBD originally described by Albert Jacquard (1972) – which present the different methods by which 2 individuals at biallelic loci can share IBD alleles. Wang attempts to counteract the bias inherent in the previously mentioned methods - particulary when dealing with inbred populations. In particular he attempts to counter the assumption oft used - of drawing allele frequencies from the same population for which relatedness is attempting to be estimated. Given the assumptions of highly outbred and unrelated populations are frequently violated in such cases - this results in an underestimate of closely related individuals and an overestimate of unrelated/distantly related individuals. To counteract this - Wang proposes the joint estimation of both allele frequencies and dyad probabilities from a sample of genotypes.</em></p>
-<p><em>Relatedness is an imperfect measure however, and comes with a few key caveats. Being a continuous and relative measure, all estimates depend on the reference population from which the allele frequencies are drawn. As such we can reasonably expect even the most accurate measure to differ considerably from our expected values. In addition, all estimates make broad assumptions about the populations for which relatedness is being inferred. These include, but are not limited to: non-overlapping generations, random mating, little or no migration, gene flow or admixture - or otherwise heavily pronounced “genetic structure”.</em></p>
-<p><em>In addition, multiple studies have failed to come to a consensus with regards to a “superior” estimator between species, populations etc. This would suggest that there is no “ideal” estimator in this regard. Galla et al (2022), found variable performance of estimators across species - and advocated for an “explicit evaluation of multiple estimators for each new data set and system.” Similarly, Harrison et al (2013) found that when comparing 3 common methods - there was broad consensus between that “all three could be applied with confidence”. In addition, they found accuracy to increase in relation with number of loci and individuals sampled - particulary in highly polymorphic regions.</em></p>
+</section>
+<section id="emibd9" class="level4">
+<h4 class="anchored" data-anchor-id="emibd9">3. EMIBD9</h4>
+<p>The EMIBD9 estimator differs from those previously mentioned – given it use of a maximum likelihood method. In particular it uses the estimation of 9 condensed modes of IBD originally described by Albert Jacquard (1972) – which present the different methods by which 2 individuals at biallelic loci can share IBD alleles. Wang attempts to counteract the bias inherent in the previously mentioned methods - particulary when dealing with inbred populations. In particular he attempts to counter the assumption oft used - of drawing allele frequencies from the same population for which relatedness is attempting to be estimated. Given the assumptions of highly outbred and unrelated populations are frequently violated in such cases - this results in an underestimate of closely related individuals and an overestimate of unrelated/distantly related individuals. To counteract this - Wang proposes the joint estimation of both allele frequencies and dyad probabilities from a sample of genotypes.</p>
+<p>Relatedness is an imperfect measure however, and comes with a few key caveats. Being a continuous and relative measure, all estimates depend on the reference population from which the allele frequencies are drawn. As such we can reasonably expect even the most accurate measure to differ considerably from our expected values. In addition, all estimates make broad assumptions about the populations for which relatedness is being inferred. These include, but are not limited to: non-overlapping generations, random mating, little or no migration, gene flow or admixture - or otherwise heavily pronounced “genetic structure”.</p>
+<p>In addition, multiple studies have failed to come to a consensus with regards to a “superior” estimator between species, populations etc. This would suggest that there is no “ideal” estimator in this regard. Galla et al (2022), found variable performance of estimators across species - and advocated for an “explicit evaluation of multiple estimators for each new data set and system.” Similarly, Harrison et al (2013) found that when comparing 3 common methods - there was broad consensus between that “all three could be applied with confidence”. In addition, they found accuracy to increase in relation with number of loci and individuals sampled - particulary in highly polymorphic regions, suggesting accuracy may also be a function of sampling depth</p>
 <p>As such it becomes evident that parentage is a complex, and highly subjective subject in many regards, with a variety of estimators providing for a wide degree of accuracy and specificity across varying circumstances.</p>
-<p><img src="images/dyads.png" class="img-fluid"></p>
+</section>
 </section>
 <section id="introduction-to-relatedness-in-dartr" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-to-relatedness-in-dartr">Introduction to relatedness in dartR</h2>
 <section id="intro" class="level3">
 <h3 class="anchored" data-anchor-id="intro">Intro</h3>
-<p><em>Welcome to this interactive R tutorial designed to provide you with a brief overview of how to use the gl.relatedness.diagnostics function - found in the dartR.captive package. This function allows for the comparison of various methods for estimating relatedness - with a focus on comparing accuracy and specificity.</em></p>
+<p>Welcome to this interactive R tutorial designed to provide you with a brief overview of how to use the gl.relatedness.diagnostics function - found in the dartR.captive package. This function allows for the comparison of various methods for estimating relatedness - with a focus on comparing accuracy and specificity.</p>
 <p>We’ll start with something basic - loading a github distro. Run the following code to install a dev copy of dartR.captive:</p>
 <div class="cell" data-exercise="true">
 <div class="cell-output cell-output-stderr">
@@ -341,7 +369,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="using-pedigrees">Using pedigrees</h2>
 <section id="creating-pedigrees" class="level3">
 <h3 class="anchored" data-anchor-id="creating-pedigrees">Creating pedigrees</h3>
-<p><em>We’ll start by reading in some data and sub-setting it - to cut down and run time. There are two possible data sets we’ve provided which have attached pedigrees - Pig and Sheep. We’ve already read in the data sets, using your knowledge of dartR and the genlight format - please subset the data frame from its original size to only 200 individuals and 300 loci please. (hint - for loci use gl.subsample.loci())</em></p>
+<p>We’ll start by reading in some data and sub-setting it - to cut down and run time. There are two possible data sets we’ve provided which have attached pedigrees - Pig and Sheep. We’ve already read in the data sets, using your knowledge of dartR and the genlight format - please subset the data frame from its original size to only 200 individuals and 300 loci please. (hint - for loci use gl.subsample.loci())</p>
 <p>Load in either the Pig or Sheep data set and then subset to only 200 individuals and 300 loci.</p>
 <div class="cell" data-exercise="true">
 <div class="cell-output cell-output-stdout">
@@ -403,12 +431,12 @@ Completed: gl.subsample.loci </code></pre>
 </section>
 <section id="generating-pedigrees---draft-may-include-may-not" class="level3">
 <h3 class="anchored" data-anchor-id="generating-pedigrees---draft-may-include-may-not">Generating pedigrees - draft may include may not</h3>
-<p><em>We can now run gl.diagnostics.relatedness with an attached pedigree. We will focus particularly on providing output with the Variance and RMSE output for testing the accuracy of various methods of estimating relatedness. To begin we’ll provide a little hint with CRAN documentation - providing you a rundown of the inputs for the function.</em></p>
+<p>We can now run gl.diagnostics.relatedness with an attached pedigree. We will focus particularly on providing output with the Variance and RMSE output for testing the accuracy of various methods of estimating relatedness. To begin we’ll provide a little hint with CRAN documentation - providing you a rundown of the inputs for the function.</p>
 <p>Brief overview of function from CRAN documentation.</p>
 <hr>
 <section id="basic-run" class="level4">
 <h4 class="anchored" data-anchor-id="basic-run">Basic Run</h4>
-<p><em>We’ll start with a basic - run without use of the RMSE or Var output providing you with the basic output. We’ll generate the item and then you can work out how the access the various slots within the object. (Hint - use the @ accessor)</em></p>
+<p>We’ll start with a basic - run without use of the RMSE or Var output providing you with the basic output. We’ll generate the item and then you can work out how the access the various slots within the object. (Hint - use the @ accessor)</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Starting gl.diagnostics.relatedness 
@@ -434,8 +462,8 @@ Starting gl.filter.heterozygosity </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Processing genlight object with SNP data
   Retaining individuals with heterozygosity in the range 0 to 0.7 
-  Minimum individual heterozygosity 0.2433 
-  Maximum individual heterozygosity 0.36 
+  Minimum individual heterozygosity 0.2533 
+  Maximum individual heterozygosity 0.3867 
 Completed: gl.filter.heterozygosity 
   Deleting individuals that are scored as all missing (NA)
 Completed: gl.filter.allna 
@@ -444,7 +472,7 @@ Starting gl2related
   Processing genlight object with SNP data
 Completed: gl2related 
    user  system elapsed 
-  0.219   0.020   0.247 
+  0.219   0.019   0.243 
 
 Reading output files into data.frames... Done!
 Starting gl.grm 
@@ -470,7 +498,7 @@ Completed: gl.grm </code></pre>
 </section>
 <section id="generating-plots-with-rmse-and-var" class="level4">
 <h4 class="anchored" data-anchor-id="generating-plots-with-rmse-and-var">Generating plots with RMSE and Var</h4>
-<p><em>By now you should be able to figure out how to generate plots using your presaved datatset - now try and calculate RMSE and Var using the gl.diagnostics.relatedness, and then access the resulting plots. If in doubt you can check the hint below however please try by yourself first.</em></p>
+<p>By now you should be able to figure out how to generate plots using your presaved datatset - now try and calculate RMSE and Var using the gl.diagnostics.relatedness, and then access the resulting plots. If in doubt you can check the hint below however please try by yourself first.</p>
 <div class="cell" data-exercise="true" data-exercise.eval="false">
 <div class="cell-output cell-output-stdout">
 <pre><code>Starting gl.diagnostics.relatedness 
@@ -482,8 +510,8 @@ Starting gl.filter.allna
 Starting gl.filter.heterozygosity 
   Processing genlight object with SNP data
   Retaining individuals with heterozygosity in the range 0 to 0.7 
-  Minimum individual heterozygosity 0.2433 
-  Maximum individual heterozygosity 0.36 
+  Minimum individual heterozygosity 0.2533 
+  Maximum individual heterozygosity 0.3867 
 Completed: gl.filter.heterozygosity 
   Deleting individuals that are scored as all missing (NA)
 Completed: gl.filter.allna 
@@ -492,7 +520,7 @@ Starting gl2related
   Processing genlight object with SNP data
 Completed: gl2related 
    user  system elapsed 
-  0.218   0.016   0.236 
+  0.226   0.023   0.256 
 
 Reading output files into data.frames... Done!
 Starting gl.grm 
@@ -518,11 +546,33 @@ Completed: gl.colors </code></pre>
 </section>
 <section id="running-a-simulation" class="level2">
 <h2 class="anchored" data-anchor-id="running-a-simulation">Running a simulation</h2>
-<p><em>We’ll next move on to running simulations - used to compare methods of calculating relatedness. The simulations are conducted using the gl.sim functions found in the dartR.sim package - <a href="https://cran.r-project.org/web/packages/dartR.sim/refman/dartR.sim.html" class="uri">https://cran.r-project.org/web/packages/dartR.sim/refman/dartR.sim.html</a>. First we begin with reading in the reference table - containing the parameters that will encode the simulation. Whilst all this is done for you as a part of the function - we must still read in two important CSV files - ref_variables.csv and sim_variables.csv - used to provide the parameters for the simulation.</em></p>
+<p>We’ll next move on to running simulations - used to compare methods of calculating relatedness. The simulations are conducted using the gl.sim functions found in the dartR.sim package - <a href="https://cran.r-project.org/web/packages/dartR.sim/refman/dartR.sim.html" class="uri">https://cran.r-project.org/web/packages/dartR.sim/refman/dartR.sim.html</a>. First we begin with reading in the reference table - containing the parameters that will encode the simulation. Whilst all this is done for you as a part of the function - we must still read in two important CSV files - ref_variables.csv and sim_variables.csv - used to provide the parameters for the simulation.</p>
 <p>We’ll begin with reading both sim_variables and ref_variables to check if they exist,</p>
+<section id="brief-overview-of-reference-and-simulation-parameters." class="level3">
+<h3 class="anchored" data-anchor-id="brief-overview-of-reference-and-simulation-parameters.">Brief overview of Reference and Simulation parameters.</h3>
+<p>As defined in the dartR.sim documentation there are more than X parameters one can edit when setting up a simulation. For our purposes we will focusing on those having the most pronounced effects on relatedness.</p>
+<section id="chromosome-lengthchunk" class="level4">
+<h4 class="anchored" data-anchor-id="chromosome-lengthchunk">Chromosome length/chunk</h4>
+<ul>
+<li>Chunk Number - # of chromosome chunks
+<ul>
+<li>Chunk_bp - number of base pairs per chromosome chunk</li>
+<li>Chunk_cm - number of centimorgans per chromosome chunk</li>
+</ul></li>
+</ul>
+<p>These settings are all functions of chromosome length - defining the number of base pairs found along each chromosome. As discussed above, relatedness is partially a function of chromosome length - such that increasing the average length induces X result and decreasing it induces Y result - take caution in this regard.</p>
+</section>
+<section id="simulation-variables" class="level4">
+<h4 class="anchored" data-anchor-id="simulation-variables">Simulation variables</h4>
+<ul>
+<li><p>Replace parents - whether parents reproduce more than once Influences number of offspring found within population - obviously has implications for relatedness …..</p></li>
+<li><p>Chromosome_name - chromosome from which to extract allele frequencies Influences reference allele frequencies - determines reference allele frequency from which estimates of IBD are drawn. As such this choice has an out sized effect on estimates of relatedness.</p></li>
+</ul>
+</section>
+</section>
 <section id="your-first-simulation-run" class="level3">
 <h3 class="anchored" data-anchor-id="your-first-simulation-run">Your first simulation run</h3>
-<p><em>Having read in the files necessary to run the simulation we will now actually conduct a simulation run - using our ref_variables and sim_variables files read in earlier. Now we will assume you have enough know-how to run a basic simulation using prior knowledge provided to you in the tutorial. We will have however start you off, with the important note being that any simulation must be run for at least 3 generations to allow for the creation of the sufficient parent-offspring relationships to allow for the calculation of relatedness levels.</em></p>
+<p>Having read in the files necessary to run the simulation we will now actually conduct a simulation run - using our ref_variables and sim_variables files read in earlier. Now we will assume you have enough know-how to run a basic simulation using prior knowledge provided to you in the tutorial. We will have however start you off, with the important note being that any simulation must be run for at least 3 generations to allow for the creation of the sufficient parent-offspring relationships to allow for the calculation of relatedness levels.</p>
 <div class="cell" data-exercise="true" data-exercise.eval="false">
 <div class="cell-output cell-output-stdout">
 <pre><code>Starting gl.diagnostics.relatedness 
@@ -534,8 +584,8 @@ Starting gl.filter.allna
 Starting gl.filter.heterozygosity 
   Processing genlight object with SNP data
   Retaining individuals with heterozygosity in the range 0 to 0.7 
-  Minimum individual heterozygosity 0.2433 
-  Maximum individual heterozygosity 0.36 
+  Minimum individual heterozygosity 0.2533 
+  Maximum individual heterozygosity 0.3867 
 Completed: gl.filter.heterozygosity 
   Deleting individuals that are scored as all missing (NA)
 Completed: gl.filter.allna 
@@ -544,7 +594,7 @@ Starting gl2related
   Processing genlight object with SNP data
 Completed: gl2related 
    user  system elapsed 
-   0.23    0.02    0.26 
+  0.219   0.017   0.238 
 
 Reading output files into data.frames... Done!
 Starting gl.grm 
@@ -556,7 +606,7 @@ Completed: gl.grm </code></pre>
 </section>
 <section id="accessing-your-sim-object" class="level3">
 <h3 class="anchored" data-anchor-id="accessing-your-sim-object">Accessing your sim object</h3>
-<p><em>Having successfully conducted your first simulation run we can now check the slots of our simulation item - with a similar method as above. To find the slot names you can check the CRAN documentation provided on the previous page.</em></p>
+<p>Having successfully conducted your first simulation run we can now check the slots of our simulation item - with a similar method as above. To find the slot names you can check the CRAN documentation provided on the previous page.</p>
 <div class="cell" data-exercise="true">
 <div class="cell-output cell-output-stdout">
 <pre><code>********************
@@ -573,10 +623,10 @@ Completed: gl.grm </code></pre>
 </section>
 <section id="installing-emibd9" class="level2">
 <h2 class="anchored" data-anchor-id="installing-emibd9">Installing EMIBD9</h2>
-<p><em>In addition to the tests provided by the related package we provide the option to include EMIBD9 in the suite of tests run. First we must install EMIDB9 and its associated binaries before doing so. Binaries and installation instructions can be find at - <a href="https://www.zsl.org/about-zsl/resources/software/emibd9" class="uri">https://www.zsl.org/about-zsl/resources/software/emibd9</a>.</em></p>
+<p>In addition to the tests provided by the related package we provide the option to include EMIBD9 in the suite of tests run. First we must install EMIDB9 and its associated binaries before doing so. Binaries and installation instructions can be find at - <a href="https://www.zsl.org/about-zsl/resources/software/emibd9" class="uri">https://www.zsl.org/about-zsl/resources/software/emibd9</a>.</p>
 <section id="mac" class="level3">
 <h3 class="anchored" data-anchor-id="mac">Mac</h3>
-<p><em>Once installation has been completed we must make the binary accessible to our system - to do access the terminal and input the following commands as seen below.</em></p>
+<p>Once installation has been completed we must make the binary accessible to our system - to do access the terminal and input the following commands as seen below.</p>
 <p><img src="images/termInstructions.png" class="img-fluid"></p>
 </section>
 </section>
@@ -584,29 +634,29 @@ Completed: gl.grm </code></pre>
 <h2 class="anchored" data-anchor-id="example-of-comparing-methods---pig-datatset">Example of comparing methods - Pig datatset</h2>
 <section id="introduction-to-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="introduction-to-dataset">Introduction to dataset</h3>
-<p><em>To illustrate the outcome of using different methods for estimating relatedness, we’ll conduct said comparison on an example data set - with an attached pedigree - in this case we’ll be using the Pig data set as described in Cleveland et al (2021). This consists of genomic data taken from 3534 pigs found on farms across the United States. In addition to extensive genomic records for a large majority of the population there exists an extensive life history, including age, sex and parentage. As such this data set provides a perfect example for comparing the results of different methods of estimating relatedness - given the possession of an extensive pedigree against which to compare the results. In addition the data set is found to contain high levels of genetic structure - with 2 highly pronounced populations - as such it allows use to analyse the efficacy of different methods at estimating relatedness in the presence of confounding factors - such as inbreeding, assortative mating, etc.</em></p>
+<p>To illustrate the outcome of using different methods for estimating relatedness, we’ll conduct said comparison on an example data set - with an attached pedigree - in this case we’ll be using the Pig data set as described in Cleveland et al (2021). This consists of genomic data taken from 3534 pigs found on farms across the United States. In addition to extensive genomic records for a large majority of the population there exists an extensive life history, including age, sex and parentage. As such this data set provides a perfect example for comparing the results of different methods of estimating relatedness - given the possession of an extensive pedigree against which to compare the results. In addition the data set is found to contain high levels of genetic structure - with 2 highly pronounced populations - as such it allows use to analyse the efficacy of different methods at estimating relatedness in the presence of confounding factors - such as inbreeding, assortative mating, etc.</p>
 <section id="data-cleanup-and-imaging" class="level4">
 <h4 class="anchored" data-anchor-id="data-cleanup-and-imaging">Data cleanup and imaging</h4>
 </section>
 <section id="cleanup" class="level4">
 <h4 class="anchored" data-anchor-id="cleanup">Cleanup</h4>
-<p><em>We’ll start with a simple sweep of the datatset removing those loci with low read count and filtering on depth.</em></p>
+<p>We’ll start with a simple sweep of the datatset removing those loci with low read count and filtering on depth.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pigFilter <span class="ot">&lt;-</span> <span class="fu">gl.filter.callrate</span>(pigTest, <span class="at">method =</span> <span class="st">"ind"</span>, <span class="at">threshold =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pigFilter <span class="ot">&lt;-</span> <span class="fu">gl.filter.callrate</span>(pigTest, <span class="at">method =</span> <span class="st">"ind"</span>, <span class="at">threshold =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/filter-callrate-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pigFilter<span class="ot">&lt;-</span> <span class="fu">gl.filter.monomorphs</span>(pigFilter,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pigFilter<span class="ot">&lt;-</span> <span class="fu">gl.filter.monomorphs</span>(pigFilter,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pigFilter <span class="ot">&lt;-</span> <span class="fu">gl.filter.callrate</span>(pigFilter,<span class="at">method =</span> <span class="st">"loc"</span>, <span class="at">threshold =</span> <span class="fl">0.95</span>,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pigFilter <span class="ot">&lt;-</span> <span class="fu">gl.filter.callrate</span>(pigFilter,<span class="at">method =</span> <span class="st">"loc"</span>, <span class="at">threshold =</span> <span class="fl">0.95</span>,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/filter-call-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p><em>Having filtered for a variety of metrics such as call rate and monomorphs we will now create a PCOA plot to examine they extent of genetic structure extent within the population</em></p>
+<p>Having filtered for a variety of metrics such as call rate and monomorphs we will now create a PCOA plot to examine they extent of genetic structure extent within the population</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Starting gl.pcoa.plot 
@@ -622,43 +672,43 @@ Completed: gl.grm </code></pre>
 <pre><code>Completed: gl.pcoa.plot </code></pre>
 </div>
 </div>
-<p><em>As seen, there appears to be quite strong genetic structure within the population - with the clear segregation of two populations. We’ll begin with a simple gl.relatedness.diagnostics run without consideration for this genetic structure.</em></p>
+<p>As seen, there appears to be quite strong genetic structure within the population - with the clear segregation of two populations. We’ll begin with a simple gl.relatedness.diagnostics run without consideration for this genetic structure.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>diagOne <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/diagOne.rds"</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>diagOne<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>diagOne <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/diagOne.rds"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>diagOne<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/diag-One-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>diagOne <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/diagOne.rds"</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>diagOne<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>diagOne <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/diagOne.rds"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>diagOne<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/diag-One_two-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p><em>As we can see certain methods - EMIBD9 and Wang (2002) have a tendency to overestimate the levels of relatedness present - as such its evident that due the aforementioned methods used in calculating relatedness it struggles with genetic structure present in the data set. To compensate we’ll separate out the two populations and then perform the analysis separately within each population to see the resulting effects on the estimates.</em></p>
-<p><em>Returning to the PCA plot, as discussed above we see 2 well-deliminated populations as such we will separate individuals down the middle, either to the left or right of the y axis, being populations A and B respectively.</em></p>
+<p>As we can see certain methods - EMIBD9 and Wang (2002) have a tendency to overestimate the levels of relatedness present - as such its evident that due the aforementioned methods used in calculating relatedness it struggles with genetic structure present in the data set. To compensate we’ll separate out the two populations and then perform the analysis separately within each population to see the resulting effects on the estimates.</p>
+<p>Returning to the PCA plot, as discussed above we see 2 well-deliminated populations as such we will separate individuals down the middle, either to the left or right of the y axis, being populations A and B respectively.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">which</span>(pigFilterPCA<span class="sc">$</span>scores[,<span class="dv">1</span>] <span class="sc">&lt;</span> <span class="dv">0</span>))</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">which</span>(pigFilterPCA<span class="sc">$</span>scores[,<span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> pigFilter[groupA]</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> pigFilter[groupB]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">which</span>(pigFilterPCA<span class="sc">$</span>scores[,<span class="dv">1</span>] <span class="sc">&lt;</span> <span class="dv">0</span>))</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">which</span>(pigFilterPCA<span class="sc">$</span>scores[,<span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> pigFilter[groupA]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> pigFilter[groupB]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="group-a" class="level3">
 <h3 class="anchored" data-anchor-id="group-a">Group A</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>diagGroupA <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/diagGroupA.rds"</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>diagGroupA<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>diagGroupA <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/diagGroupA.rds"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>diagGroupA<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/groupA-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>diagGroupA<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>diagGroupA<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/groupA_two-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -667,46 +717,46 @@ Completed: gl.grm </code></pre>
 <section id="group-b" class="level3">
 <h3 class="anchored" data-anchor-id="group-b">Group B</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>diagGroupB <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/diagGroupB.rds"</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>diagGroupB<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>diagGroupB <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/diagGroupB.rds"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>diagGroupB<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/groupB-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>diagGroupB<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>diagGroupB<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/groupB_two-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can now compare the results for both groupA and groupB running them separately through gl.diagnostics.relatedness</p>
-<p><em>As we can see by separating out the two populations we improved the resulting fit of the estimates - with EMIBD9 having the most improvement - likely a result of the reduction in genetic structure seen.</em></p>
+<p>As we can see by separating out the two populations we improved the resulting fit of the estimates - with EMIBD9 having the most improvement - likely a result of the reduction in genetic structure seen.</p>
 </section>
 </section>
 <section id="example-of-comparing-methods---soay-sheep" class="level2">
 <h2 class="anchored" data-anchor-id="example-of-comparing-methods---soay-sheep">Example of comparing methods - Soay Sheep</h2>
 <section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
-<p><em>The Soay sheep is a breed descended from feral sheep found on the island of Soay off the North coast of Scotland, in the St Kilda Archipelago. A population found on the island of Hirta has, since the 1950’s, been subject to an extensive study, serving as a model for the research of evolutionary and population dynamics given its feral and unmanaged state. In the last 20 years with the introduction of micro-satellite, SNP and other complexity reduction methods - the study has taken on a new dimension with the addition of whole genome sequencing - allowing scientists to store whole genomic data for individuals within the population. In addition - there exists a large and comprehensive pedigree - providing a surfeit of data on parentage, sex, age and a variety of other characteristics.</em></p>
+<p>The Soay sheep is a breed descended from feral sheep found on the island of Soay off the North coast of Scotland, in the St Kilda Archipelago. A population found on the island of Hirta has, since the 1950’s, been subject to an extensive study, serving as a model for the research of evolutionary and population dynamics given its feral and unmanaged state. In the last 20 years with the introduction of micro-satellite, SNP and other complexity reduction methods - the study has taken on a new dimension with the addition of whole genome sequencing - allowing scientists to store whole genomic data for individuals within the population. In addition - there exists a large and comprehensive pedigree - providing a surfeit of data on parentage, sex, age and a variety of other characteristics.</p>
 <section id="cleanup-1" class="level4">
 <h4 class="anchored" data-anchor-id="cleanup-1">Cleanup</h4>
-<p><em>We’ll start with a simple sweep of the datatset removing those loci with low read count and filtering on depth.</em></p>
+<p>We’ll start with a simple sweep of the datatset removing those loci with low read count and filtering on depth.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sheepFilter <span class="ot">&lt;-</span> <span class="fu">gl.filter.callrate</span>(sheepTest, <span class="at">method =</span> <span class="st">"ind"</span>, <span class="at">threshold =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sheepFilter <span class="ot">&lt;-</span> <span class="fu">gl.filter.callrate</span>(sheepTest, <span class="at">method =</span> <span class="st">"ind"</span>, <span class="at">threshold =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/filter-callrate-sheep-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sheepFilter<span class="ot">&lt;-</span> <span class="fu">gl.filter.monomorphs</span>(sheepFilter,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sheepFilter<span class="ot">&lt;-</span> <span class="fu">gl.filter.monomorphs</span>(sheepFilter,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>sheepFilter <span class="ot">&lt;-</span> <span class="fu">gl.filter.callrate</span>(sheepFilter,<span class="at">method =</span> <span class="st">"loc"</span>, <span class="at">threshold =</span> <span class="fl">0.95</span>,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sheepFilter <span class="ot">&lt;-</span> <span class="fu">gl.filter.callrate</span>(sheepFilter,<span class="at">method =</span> <span class="st">"loc"</span>, <span class="at">threshold =</span> <span class="fl">0.95</span>,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/filter-call-sheep-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p><em>Having filtered for a variety of metrics such as call rate and monomorphs we will now create a PCOA plot to examine they extent of genetic structure extent within the population</em></p>
+<p>Having filtered for a variety of metrics such as call rate and monomorphs we will now create a PCOA plot to examine they extent of genetic structure extent within the population</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Starting gl.pcoa.plot 
@@ -722,33 +772,33 @@ Completed: gl.grm </code></pre>
 <pre><code>Completed: gl.pcoa.plot </code></pre>
 </div>
 </div>
-<p><em>As seen by the PCA there appears to be little if any genetic structure evident within the population - that is there appears to be minimal if any sub-populations present within the group at large. As such we can reasonably expect the assumptions of our related estimates to hold - primarily it being that the population is large, outbred and undergoes random mating.</em></p>
+<p>As seen by the PCA there appears to be little if any genetic structure evident within the population - that is there appears to be minimal if any sub-populations present within the group at large. As such we can reasonably expect the assumptions of our related estimates to hold - primarily it being that the population is large, outbred and undergoes random mating.</p>
 </section>
 <section id="related-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="related-analysis">Related analysis</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sheepDiag <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/sheepDiag.rds"</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>sheepDiag<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sheepDiag <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/sheepDiag.rds"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>sheepDiag<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/sheepDiag-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sheepDiag<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sheepDiag<span class="sc">@</span>plotList<span class="sc">$</span>Iteration1[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/sheepDiag_two-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p><em>As expected - all methods held up to half-siblings, broadly congruent with the manual coding results - as seen by the red dotted line. There is a high degree of variance present for full-sibs (NOT SURE HAVE TO READ UP AS TO WHY). In addition all methods appear to greatly overestimate the general relatedness of the population evidenced by the plots seen for the half first and second cousins.</em></p>
+<p>As expected - all methods held up to half-siblings, broadly congruent with the manual coding results - as seen by the red dotted line. There is a high degree of variance present for full-sibs (NOT SURE HAVE TO READ UP AS TO WHY). In addition all methods appear to greatly overestimate the general relatedness of the population evidenced by the plots seen for the half first and second cousins.</p>
 </section>
 </section>
 </section>
-<section id="colony---inference" class="level2">
-<h2 class="anchored" data-anchor-id="colony---inference">COLONY - inference</h2>
-<p><em>COLONY is a program developed by Jinliang Wang at the ZSL for the inference of parentage and sibship from multilocus genelogical data. Through the use of a full-pedigree approach - COLONY can more accurately infer relatedness, however at the cost of an increase in computational demands. Samples are assumed to be taken from a large randomly mating population. Individuals are then partioned into three subsamples - offspring, candidate father and candidate mother. Offspring are either full-sibs, half-sibs or unrelated.</em> - Come back to it.</p>
+<section id="inferring-an-unknown-relative---colony" class="level2">
+<h2 class="anchored" data-anchor-id="inferring-an-unknown-relative---colony">Inferring an unknown relative - COLONY</h2>
+<p>COLONY is a program developed by Jinliang Wang at the ZSL for the inference of parentage and sibship from multilocus genelogical data. Through the use of a full-pedigree approach - COLONY can more accurately infer relatedness, however at the cost of an increase in computational demands. Samples are assumed to be taken from a large randomly mating population. Individuals are then partioned into three subsamples - offspring, candidate father and candidate mother. Offspring are either full-sibs, half-sibs or unrelated. - Come back to it.</p>
 <section id="the-problem" class="level3">
 <h3 class="anchored" data-anchor-id="the-problem">The problem</h3>
-<p>You have been breeding a small hatch of central bearded Dragons (Pogona Vitticeps), for the purposes of a full genome study. You have a highly fecund female - LSWt111 - who has had a clutch of 24 eggs. The issues arises in that you have no idea who the potential father could be - there are numerous candidate males within the enclosure. As such you need to “reconstruct” a paternal genotype from the SNP data you have for LSWt111 and her offspring.</p>
+<p>You have been breeding a small hatch of central bearded Dragons (Pogona Vitticeps), for the purposes of a full genome study. You have a highly fecund female - LSWt111 - who has had a clutch of 24 eggs. The issue arises in that you have no idea who the potential father could be - there are numerous candidate males within the enclosure. As such you need to reconstruct a paternal genotype from the SNP data you have for LSWt111 and her offspring.</p>
 </section>
 <section id="generating-a-paternal-genotype-with-colony" class="level3">
 <h3 class="anchored" data-anchor-id="generating-a-paternal-genotype-with-colony">Generating a paternal genotype with COLONY</h3>
@@ -756,8 +806,8 @@ Completed: gl.grm </code></pre>
 <h4 class="anchored" data-anchor-id="reading-in-the-data">1. Reading in the data</h4>
 <p>We’ll begin by reading in the RDS data containing the data for LSWt111 and her offspring.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>LSWt111 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/bella.RData"</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">@</span>other<span class="sc">$</span>ind.metrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>LSWt111 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/bella.RData"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">@</span>other<span class="sc">$</span>ind.metrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       id       pop  X  drainage            species latitude
 Bella_egg_1   Bella_egg_1 Bella_egg NA Bellinger Myuchelys_georgesi -30.4208
@@ -843,12 +893,12 @@ LSWt111       152.7541 DFwt25-10896           2-F5</code></pre>
 <section id="minor-alleles-secondaries-hwe" class="level5">
 <h5 class="anchored" data-anchor-id="minor-alleles-secondaries-hwe">3. Minor alleles, secondaries, HWE</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>LSWt111 <span class="ot">&lt;-</span> <span class="fu">gl.filter.maf</span>(LSWt111,<span class="at">threshold =</span> <span class="dv">3</span>,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>LSWt111 <span class="ot">&lt;-</span> <span class="fu">gl.filter.maf</span>(LSWt111,<span class="at">threshold =</span> <span class="dv">3</span>,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/filterRest-Bella-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>LSWt111 <span class="ot">&lt;-</span> <span class="fu">gl.filter.secondaries</span>(LSWt111,<span class="at">verbose =</span> <span class="dv">5</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>LSWt111 <span class="ot">&lt;-</span> <span class="fu">gl.filter.hwe</span>(LSWt111,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>LSWt111 <span class="ot">&lt;-</span> <span class="fu">gl.filter.secondaries</span>(LSWt111,<span class="at">verbose =</span> <span class="dv">5</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>LSWt111 <span class="ot">&lt;-</span> <span class="fu">gl.filter.hwe</span>(LSWt111,<span class="at">verbose =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -857,23 +907,26 @@ LSWt111       152.7541 DFwt25-10896           2-F5</code></pre>
 <p>The source for COLONY can be found at the ZSL website - under the “software” banner - <a href="https://www.zsl.org/about-zsl/resources/software/colony" class="uri">https://www.zsl.org/about-zsl/resources/software/colony</a>. After downloading the relevant binary for your system you will then have to through the steps outlined in the relevant README.txt file.</p>
 <p>For this tutorial will we focus on UNIX systems (Linux/MacOS).</p>
 <p>After downloading and unwrapping the relevant folder - we must prepare the binaries for use by R. Step by step instructions can be found in the image below.</p>
-<p><img src="images/COLONY_Instructions.png" class="img-fluid" style="width:75.0%"></p>
-<p>First we should navigate to the folder containing the binaries in this case its found in my downloads - but you replace with your directory of choice - where the binary is stored. Next we make the binaries executable with the chmod u+x command giving us execution privileges - on Unix systems this should be down for the colony2s.out and ColonyBatchRun.out files. Finally we can check our privileges with the ls -l seeing that for both the aforementioned files we have been given read/write/execute privileges.</p>
-<section id="preparing-data" class="level5">
-<h5 class="anchored" data-anchor-id="preparing-data">5. Preparing data</h5>
+<p>\begin{center} <img src="images/COLONY_Instructions.png" class="img-fluid" style="width:75.0%"> \end{center}</p>
+<p>First we should navigate to the folder containing the binaries; in this case its found in my downloads, be sure to use the specific directory in which the binary is stored on your computer.</p>
+<p>Next we make the binaries executable, using the chmod u+x command, as seen above. On Unix systems (MacOs/Linux) this must be done for both the colony2s.out and ColonyBatchRun.out files.</p>
+<p>Having completed these steps, we can check our privileges for the files to ensure our commands have worked. Using ls -l /path/to/file (as above), we can see we have given ourselves read/write access to both files - ensuring they are usable by COLONY.</p>
+</section>
+<section id="preparing-data" class="level4">
+<h4 class="anchored" data-anchor-id="preparing-data">5. Preparing data</h4>
 <p>The data must now be prepped for a COLONY run - namely by encoding the metadata file to include 3 columns which encode the parents - ie YES for mother, father or offspring.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mother <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"no"</span>, <span class="fu">nrow</span>(LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics))</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>father <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"no"</span>, <span class="fu">nrow</span>(LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics))</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>offspring <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"yes"</span>, <span class="fu">nrow</span>(LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics))</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics<span class="sc">$</span>mother <span class="ot">&lt;-</span> mother</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics<span class="sc">$</span>father <span class="ot">&lt;-</span> father</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics<span class="sc">$</span>offspring <span class="ot">&lt;-</span> offspring</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics<span class="sc">$</span>mother[<span class="dv">25</span>] <span class="ot">&lt;-</span> <span class="st">"yes"</span></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics<span class="sc">$</span>offspring[<span class="dv">25</span>] <span class="ot">&lt;-</span> <span class="st">"no"</span></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics[,<span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"mother"</span>, <span class="st">"father"</span>, <span class="st">"offspring"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mother <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"no"</span>, <span class="fu">nrow</span>(LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics))</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>father <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"no"</span>, <span class="fu">nrow</span>(LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics))</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>offspring <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"yes"</span>, <span class="fu">nrow</span>(LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics))</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics<span class="sc">$</span>mother <span class="ot">&lt;-</span> mother</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics<span class="sc">$</span>father <span class="ot">&lt;-</span> father</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics<span class="sc">$</span>offspring <span class="ot">&lt;-</span> offspring</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics<span class="sc">$</span>mother[<span class="dv">25</span>] <span class="ot">&lt;-</span> <span class="st">"yes"</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics<span class="sc">$</span>offspring[<span class="dv">25</span>] <span class="ot">&lt;-</span> <span class="st">"no"</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(LSWt111<span class="sc">$</span>other<span class="sc">$</span>ind.metrics[,<span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"mother"</span>, <span class="st">"father"</span>, <span class="st">"offspring"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       id mother father offspring
 Bella_egg_15 Bella_egg_15     no     no       yes
@@ -886,28 +939,28 @@ LSWt111           LSWt111    yes     no        no</code></pre>
 </div>
 <p>We can now run COLONY like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>paternalinfer <span class="ot">&lt;-</span> <span class="fu">infer_paternal_genotypes</span>(LSWt111, </span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">mother_id =</span> <span class="st">"LSWt111"</span>, </span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">offspring_ids =</span> LSWt111<span class="sc">$</span>ind.names[<span class="dv">1</span><span class="sc">:</span><span class="dv">24</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>paternalinfer <span class="ot">&lt;-</span> <span class="fu">infer_paternal_genotypes</span>(LSWt111, </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">mother_id =</span> <span class="st">"LSWt111"</span>, </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">offspring_ids =</span> LSWt111<span class="sc">$</span>ind.names[<span class="dv">1</span><span class="sc">:</span><span class="dv">24</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now include the father in the genlight object containing the mother and offspring - like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fatherInfer <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(paternalinfer<span class="sc">$</span>inferred_father, </span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">row.names =</span> paternalinfer<span class="sc">$</span>SNP)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fatherInfer) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bella_Father"</span>) </span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>fatherInferGen <span class="ot">&lt;-</span> fatherInfer <span class="sc">%&gt;%</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  {.<span class="ot">&lt;-</span> <span class="fu">t</span>(.);.} </span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>bellaRMatrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(LSWt111)</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>fatherMat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(fatherInferGen)</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>combineR <span class="ot">&lt;-</span> <span class="fu">rbind</span>(bellaRMatrix, fatherMat) <span class="sc">%&gt;%</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  {. <span class="ot">&lt;-</span> <span class="fu">as.genlight</span>(.);.}</span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>combineR<span class="sc">@</span>other <span class="ot">&lt;-</span> LSWt111<span class="sc">@</span>other</span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>combineR<span class="sc">@</span>pop <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">rep</span>(<span class="st">"A"</span>, <span class="fu">nInd</span>(combineR)))</span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>combineR <span class="ot">&lt;-</span> combineR <span class="sc">%&gt;%</span></span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">position</span>(.) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nLoc</span>(.); .} <span class="sc">%&gt;%</span></span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">chromosome</span>(.) <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"1"</span>, <span class="fu">nLoc</span>(.));.}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>fatherInfer <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(paternalinfer<span class="sc">$</span>inferred_father, </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">row.names =</span> paternalinfer<span class="sc">$</span>SNP)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fatherInfer) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bella_Father"</span>) </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>fatherInferGen <span class="ot">&lt;-</span> fatherInfer <span class="sc">%&gt;%</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  {.<span class="ot">&lt;-</span> <span class="fu">t</span>(.);.} </span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>bellaRMatrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(LSWt111)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>fatherMat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(fatherInferGen)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>combineR <span class="ot">&lt;-</span> <span class="fu">rbind</span>(bellaRMatrix, fatherMat) <span class="sc">%&gt;%</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  {. <span class="ot">&lt;-</span> <span class="fu">as.genlight</span>(.);.}</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>combineR<span class="sc">@</span>other <span class="ot">&lt;-</span> LSWt111<span class="sc">@</span>other</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>combineR<span class="sc">@</span>pop <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">rep</span>(<span class="st">"A"</span>, <span class="fu">nInd</span>(combineR)))</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>combineR <span class="ot">&lt;-</span> combineR <span class="sc">%&gt;%</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">position</span>(.) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nLoc</span>(.); .} <span class="sc">%&gt;%</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">chromosome</span>(.) <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"1"</span>, <span class="fu">nLoc</span>(.));.}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can now perform a quick PCA to check if our assumptions have held.</p>
+<p>We can now perform a quick PCA to check if the COLONY results are plasuible.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Starting gl.pcoa 
@@ -952,38 +1005,50 @@ Completed: gl.pcoa </code></pre>
 <p><img src="session15_files/figure-html/bellaPCA-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>As expected, we see the offspring segregate from both parents - with the parents being opposite sides of the same axis.</p>
+<p>As expected we see the parents segregate to two separate axis, with the offspring being equidistant from both - as expected in individuals sharing 50% of each parents DNA.</p>
 </section>
-<section id="simulation-run" class="level5">
-<h5 class="anchored" data-anchor-id="simulation-run">7. Simulation run</h5>
+<section id="finding-the-father-in-the-population" class="level4">
+<h4 class="anchored" data-anchor-id="finding-the-father-in-the-population">6. Finding the father in the population</h4>
+<p>Having successfully created an SNP fingerprint for a simulated father within our data set - our goal is now to found said father within the remaining individuals of the population.</p>
+<p>Whilst there exists a plethora of potential methods by which we can match an unknown SNP set to an individual within a population - we’ve elected to use a simple method - hamming distance, as deployed in the find-by-SNP repo github. Hamming distance measures the number of positions at which corresponding strings differ, and as such is an efficient method for comparing SNP sets - being encoded in bits - either 0, 1 or 2.</p>
+<ul>
+<li>Potential models to use
+<ul>
+<li>littleblackfish - find by SNP</li>
+<li>cran/hip hop</li>
+</ul></li>
+</ul>
+</section>
+<section id="x.-simulation-run---dont-think-is-neccessary---might-remove" class="level4">
+<h4 class="anchored" data-anchor-id="x.-simulation-run---dont-think-is-neccessary---might-remove">X. Simulation run - dont think is neccessary - might remove</h4>
 <p>We can now run a simulation and analyse the output using the gl.diagnostics.relatedness function form the dartR.captive package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>LSWt111Sim <span class="ot">&lt;-</span> <span class="fu">gl.diagnostics.relatedness</span>(combineR, </span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">cleanup =</span> T, </span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">ref_variables =</span> <span class="st">"data/ref_variables.csv"</span>, </span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">sim_variables =</span> <span class="st">"data/sim_variables.csv"</span>, </span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">run_sim =</span> T, </span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">which_tests =</span> <span class="fu">c</span>(<span class="st">"wang"</span>, <span class="st">"lynchli"</span>),</span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">IncludePlots =</span> T,</span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">rmseOut =</span>T,</span>
-<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">varOut =</span> F,</span>
-<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">runE9 =</span> T, </span>
-<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">e9Path =</span> <span class="st">"data"</span>,</span>
-<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">e9parallel =</span> T, </span>
-<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">nCores =</span> <span class="dv">4</span>,</span>
-<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">numberIterations =</span> <span class="dv">1</span>, </span>
-<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">numberGenerations =</span> <span class="dv">3</span>,</span>
-<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">includedPed =</span> F</span>
-<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>LSWt111Sim <span class="ot">&lt;-</span> <span class="fu">gl.diagnostics.relatedness</span>(combineR, </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">cleanup =</span> T, </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">ref_variables =</span> <span class="st">"data/ref_variables.csv"</span>, </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">sim_variables =</span> <span class="st">"data/sim_variables.csv"</span>, </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">run_sim =</span> T, </span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">which_tests =</span> <span class="fu">c</span>(<span class="st">"wang"</span>, <span class="st">"lynchli"</span>),</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">IncludePlots =</span> T,</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">rmseOut =</span>T,</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">varOut =</span> F,</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">runE9 =</span> T, </span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">e9Path =</span> <span class="st">"data"</span>,</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">e9parallel =</span> T, </span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">nCores =</span> <span class="dv">4</span>,</span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">numberIterations =</span> <span class="dv">1</span>, </span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">numberGenerations =</span> <span class="dv">3</span>,</span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">includedPed =</span> F</span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>LSWt111Sim<span class="sc">@</span>plotList[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>LSWt111Sim<span class="sc">@</span>plotList[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/LSWT-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>LSWt111Sim<span class="sc">@</span>plotList[[<span class="dv">1</span>]][[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>LSWt111Sim<span class="sc">@</span>plotList[[<span class="dv">1</span>]][[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="session15_files/figure-html/LSWT_two-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1050,7 +1115,6 @@ ojs_define <- function(..., .session = shiny::getDefaultReactiveDomain()) {
 <!--/html_preserve-->
 
 
-</section>
 </section>
 </section>
 </section>
