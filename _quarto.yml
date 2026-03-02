@@ -12,6 +12,7 @@ book:
   - inst/tutorials/session1/session1.rmd
   - inst/tutorials/session2_sim/session2_sim.rmd
   - inst/tutorials/session15/session15.rmd
+  - inst/tutorials/sessionX_forDeveloper/sessionX_forDeveloper.Rmd
 format:
   html:
     toc: true

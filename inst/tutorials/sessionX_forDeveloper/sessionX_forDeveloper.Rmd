@@ -1,5 +1,5 @@
 ---
-title: "dartRverse"
+title: "For the developer"
 author: "The dartR Team"
 date: | 
     ![](images/dartR7.png){width=6cm}

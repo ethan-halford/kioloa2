@@ -66,6 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
+<link href="../../../inst/tutorials/sessionX_forDeveloper/sessionX_forDeveloper.html" rel="next">
 <link href="../../../inst/tutorials/session2_sim/session2_sim.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
@@ -170,6 +171,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Relatedness - an introduction in dartR</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../inst/tutorials/sessionX_forDeveloper/sessionX_forDeveloper.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">dartRverse</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -184,6 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link" data-scroll-target="#learning-outcomes">Learning outcomes</a></li>
   </ul></li>
+  <li><a href="#session-overview" id="toc-session-overview" class="nav-link" data-scroll-target="#session-overview">Session overview</a></li>
   <li><a href="#introduction-to-genetic-relatedness" id="toc-introduction-to-genetic-relatedness" class="nav-link" data-scroll-target="#introduction-to-genetic-relatedness">Introduction to Genetic relatedness</a>
   <ul>
   <li><a href="#tutorial-introduction" id="toc-tutorial-introduction" class="nav-link" data-scroll-target="#tutorial-introduction">Tutorial introduction</a></li>
@@ -301,7 +309,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="learning-outcomes" class="level3">
 <h3 class="anchored" data-anchor-id="learning-outcomes">Learning outcomes</h3>
 <p>In this session we will learn the basics of calculating relatedness within the dartRverse.</p>
+<hr>
 </section>
+</section>
+<section id="session-overview" class="level2">
+<h2 class="anchored" data-anchor-id="session-overview">Session overview</h2>
+<ul>
+<li><strong>Introduction to Calculating Relatedness and the concept of IBD</strong>
+<ul>
+<li>Brief introduction to the concept of genetic relatedness</li>
+<li>What does it mean for individuals to be Identical By Descent and how to calculate an IBD coefficient</li>
+<li>Specific methods of calculating relatedness - an overview</li>
+</ul></li>
+<li><strong>Relatedness in dartR</strong>
+<ul>
+<li>Calculating relatedness in dartR - what functionality currently exists</li>
+<li>Main functions and their use</li>
+</ul></li>
+<li><strong>Pedigrees - their use</strong>
+<ul>
+<li>What is a pedigree?</li>
+<li>Their use in calculating relatedness</li>
+<li>Using pedigrees within dartR</li>
+</ul></li>
+<li><strong>Simulation for relatedness - basics</strong>
+<ul>
+<li>Brief follow on from Bernd Gruber’s session</li>
+<li>Overview for inputs and their meaning</li>
+<li>Use of simulations to compare methods of calculating relatedness</li>
+<li>Interpreting output</li>
+</ul></li>
+<li><strong>Adding complexity - use of EMIDB9</strong>
+<ul>
+<li>EMIDB9 - brief recap of introduction</li>
+<li>How to install EMIBD9</li>
+</ul></li>
+<li><strong>Case Study 1 - Pig breeding dataset</strong>
+<ul>
+<li>Introduction to the pig breeding data set</li>
+<li>Cleanup and data preparation</li>
+<li>Comparison of methods</li>
+</ul></li>
+<li><strong>Case Study 2 - Soay sheep dataset</strong>
+<ul>
+<li>Introduction to the Soay sheep dataset</li>
+<li>Cleanup and data preparation</li>
+<li>Comparison of methods</li>
+</ul></li>
+<li><strong>Inferring an unknown relative - using COLONY</strong>
+<ul>
+<li>Intro to COLONY and problem at large</li>
+<li>Reading in data and basic cleanup</li>
+<li>Downloading and installing COLONY binaries</li>
+<li>COLONY run - interpreting output</li>
+<li>Matching unknown SNP with individual in population]</li>
+</ul></li>
+<li><strong>Additional reading</strong>
+<ul>
+<li>References and additional reading</li>
+</ul></li>
+<li><strong>Exercises</strong>
+<ul>
+<li>Exercises to work through</li>
+<li>Input participants own data</li>
+</ul></li>
+<li><strong>Wrap up</strong></li>
+</ul>
+<hr>
 </section>
 <section id="introduction-to-genetic-relatedness" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-to-genetic-relatedness">Introduction to Genetic relatedness</h2>
@@ -462,8 +536,8 @@ Starting gl.filter.heterozygosity </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Processing genlight object with SNP data
   Retaining individuals with heterozygosity in the range 0 to 0.7 
-  Minimum individual heterozygosity 0.2533 
-  Maximum individual heterozygosity 0.3867 
+  Minimum individual heterozygosity 0.2467 
+  Maximum individual heterozygosity 0.4 
 Completed: gl.filter.heterozygosity 
   Deleting individuals that are scored as all missing (NA)
 Completed: gl.filter.allna 
@@ -472,7 +546,7 @@ Starting gl2related
   Processing genlight object with SNP data
 Completed: gl2related 
    user  system elapsed 
-  0.219   0.019   0.243 
+  0.214   0.016   0.233 
 
 Reading output files into data.frames... Done!
 Starting gl.grm 
@@ -510,8 +584,8 @@ Starting gl.filter.allna
 Starting gl.filter.heterozygosity 
   Processing genlight object with SNP data
   Retaining individuals with heterozygosity in the range 0 to 0.7 
-  Minimum individual heterozygosity 0.2533 
-  Maximum individual heterozygosity 0.3867 
+  Minimum individual heterozygosity 0.2467 
+  Maximum individual heterozygosity 0.4 
 Completed: gl.filter.heterozygosity 
   Deleting individuals that are scored as all missing (NA)
 Completed: gl.filter.allna 
@@ -520,7 +594,7 @@ Starting gl2related
   Processing genlight object with SNP data
 Completed: gl2related 
    user  system elapsed 
-  0.226   0.023   0.256 
+  0.210   0.016   0.228 
 
 Reading output files into data.frames... Done!
 Starting gl.grm 
@@ -584,8 +658,8 @@ Starting gl.filter.allna
 Starting gl.filter.heterozygosity 
   Processing genlight object with SNP data
   Retaining individuals with heterozygosity in the range 0 to 0.7 
-  Minimum individual heterozygosity 0.2533 
-  Maximum individual heterozygosity 0.3867 
+  Minimum individual heterozygosity 0.2467 
+  Maximum individual heterozygosity 0.4 
 Completed: gl.filter.heterozygosity 
   Deleting individuals that are scored as all missing (NA)
 Completed: gl.filter.allna 
@@ -594,7 +668,7 @@ Starting gl2related
   Processing genlight object with SNP data
 Completed: gl2related 
    user  system elapsed 
-  0.219   0.017   0.238 
+  0.212   0.016   0.228 
 
 Reading output files into data.frames... Done!
 Starting gl.grm 
@@ -1376,6 +1450,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../../../inst/tutorials/sessionX_forDeveloper/sessionX_forDeveloper.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">dartRverse</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
