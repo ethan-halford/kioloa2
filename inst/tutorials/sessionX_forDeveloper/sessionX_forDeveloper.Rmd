@@ -175,7 +175,7 @@ INSERT EXAMPLE
 
 In addition we also flag the start of the function with a # DO THE JOB tag: such as: 
 
-```{r badexample}
+```{r badexample_2}
 thingy <- function(a,b){
   
   if(!(a == "num" | b == "num")){
