@@ -52,6 +52,55 @@ Session Presenters
 
 In this session we will learn the basics of calculating relatedness within the dartRverse.
 
+
+------------------------------------------------------------------------
+
+## Session overview 
+
+-   **Introduction to Calculating Relatedness and the concept of IBD**
+    -   Brief introduction to the concept of genetic relatedness
+    -   What does it mean for individuals to be Identical By Descent and how to calculate an IBD coefficient
+    -   Specific methods of calculating relatedness - an overview 
+-   **Relatedness in dartR**
+    -   Calculating relatedness in dartR - what functionality currently exists 
+    -   Main functions and their use 
+-   **Pedigrees - their use**
+    -   What is a pedigree?
+    -   Their use in calculating relatedness 
+    -   Using pedigrees within dartR 
+-   **Simulation for relatedness - basics**
+    -   Brief follow on from Bernd Gruber's session 
+    -   Overview for inputs and their meaning 
+    -   Use of simulations to compare methods of calculating relatedness 
+    -   Interpreting output 
+-   **Adding complexity - use of EMIDB9**
+    -   EMIDB9 - brief recap of introduction 
+    -   How to install EMIBD9 
+-   **Case Study 1 - Pig breeding dataset**
+    -   Introduction to the pig breeding data set 
+    -   Cleanup and data preparation 
+    -   Comparison of methods 
+-   **Case Study 2 - Soay sheep dataset**
+    -   Introduction to the Soay sheep dataset 
+    -   Cleanup and data preparation 
+    -   Comparison of methods 
+-   **Inferring an unknown relative - using COLONY**
+    -   Intro to COLONY and problem at large 
+    -   Reading in data and basic cleanup 
+    -   Downloading and installing COLONY binaries 
+    -   COLONY run - interpreting output 
+    -   Matching unknown SNP with individual in population]
+-   **Additional reading**
+    -   References and additional reading 
+-   **Exercises**
+    -   Exercises to work through 
+    -   Input participants own data 
+-   **Wrap up** 
+
+------------------------------------------------------------------------
+
+
+
 ## Introduction to Genetic relatedness
 
 #### Tutorial introduction
@@ -67,6 +116,7 @@ The basis for the most popular estimators is the concept of identical by descent
 
 
 ------------------------------------------------------------------------
+
 
 #### Methods of estimating relatedness
 
