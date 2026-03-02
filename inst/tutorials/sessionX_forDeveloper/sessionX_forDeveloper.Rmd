@@ -1,0 +1,215 @@
+---
+title: "dartRverse"
+author: "The dartR Team"
+date: | 
+    ![](images/dartR7.png){width=6cm}
+output:
+  learnr::tutorial:
+    progressive: false
+    allow_skip: true
+    theme: "united"
+    highlight: 'monochrome'
+    css: css/dartR_style.css
+runtime: shiny_prerendered
+
+description: "For the developer introduction to Development of dartR functions"
+---
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position="right", color="black")
+```
+
+```{r setup, include=FALSE}
+library(gbRd)
+library(tools)
+library(semantic.dashboard)
+devtools::install_github("https://github.com/green-striped-gecko/dartR.captive/tree/dev_ethan")
+library("dartR.captive")
+library(dartRverse)
+```
+
+# Rough overview of dartR for the developer
+
+1.  Introduction to basics of development
+
+-   Starting with basics etc.
+-   Writing functions
+
+2.  DartR style guide
+
+-   Roxygen2 documentation at start of functions
+-   Good practice for writing functions
+-   Using gl.document for writing start of functions
+
+3.  Example - writing basic function
+
+-   gl.something.basic - does ANYTHING
+-   write basic function for printing or combining inputs something like that
+
+4.  Introduction to github
+
+-   Repo's
+-   Push/pull merge etc.
+-   forking directories
+
+5.  Github specifically for dartR
+
+-   fork directory
+-   create local git repo on rstudio
+-   create function - compile local copy - make sure package is installable - ie changes have broken the package
+-   commit/push to forked repo
+-   make pull/merge request from forked repo to original repo
+
+6.  Common errors/hangups
+
+-   ie errors with local variables not being defined etc.
+
+7.  Roundup/questions etc.
+
+## dartR for the developer: Introduction to developing for the dartR package
+
+*Session Presenters*
+
+Ethan Halford and Arthur Georges
+
+## Introduction
+
+### Getting started with development - joining the dartR team
+
+As an open-source project dartR encourages its users to actively contribute to the package, as far as development goes the more the merrier! By helping with development you can improve the quality of the package, limit bugs, and help with the development of new features.
+
+That being said, open source is not a synonym for free for all! To ensure the stability and condition of the package remains high, there are a number of rules we must adhere to when developing new features.
+
+As such in this tutorial, we'll be providing an introduction as to the means by which you can become a developer, and actively contribute to the package. We'll introduce you to the style guide, how to use it in the development of functions, provide a brief intro to github and how to manage pushing, pulling, merging and forking! By the end you'll be a development pro, etc. etc. ...... not done yet
+
+## Session overview
+
+-   **1. Introduction to basics of development**
+    -   Starting with basics etc.
+    -   Writing functions
+-   **2. DartR style guide**
+    -   Roxygen2 documentation at start of functions
+    -   Good practice for writing functions
+    -   Using gl.document for writing start of functions
+-   **3. Example - writing basic function**
+    -   gl.something.basic - does ANYTHING
+    -   write basic function for printing or combining inputs something like that
+-   **4. Introduction to github**
+    -   Repo's
+    -   Push/pull merge etc.
+    -   forking directories
+-   **5. Github specifically for dartR**
+    -   fork directory
+    -   create local git repo on rstudio
+    -   create function - compile local copy - make sure package is installable - ie changes have broken the package
+    -   commit/push to forked repo
+    -   make pull/merge request from forked repo to original repo
+-   **6. Common errors/hangups**
+    -   ie errors with local variables not being defined etc.
+-   **7. Roundup/questions etc.**
+
+### 1. Basics of development and the dartR style guide
+
+#### The dartR function: a skeleton
+
+As discussed, there exists a variety of rules which we should adhere to as developers, in doing so we can ensure the quality, stability and uniformity of our work across platforms. We also mustn't forget other developers exist! In all things open source, there are more than one set of eyes, so ensuring easy collaboration is the key to success.
+
+As such we'll begin with the basic structure of a dartR function, its appearance and the logic by which you should write your code. All dartR functions have the following skeleton:
+
+1.  Introductory code based on roxygen2;
+2.  Examples again coded in roxygen2;
+3.  The initial function definition;
+4.  Setting the verbosity level with the help of gl.set.verbosity();
+5.  Validating the data passed to the function with the help of gl.check.datatype();
+6.  Checking that the required dependencies are in place;
+7.  Applying some function specific checks on the values passed to the function;
+8.  Announcing the start of the function for the user with the help of utils.flag.start();
+9.  DO THE JOB
+10. Delivering the graphical outputs
+11. Saving the graphical outputs as gglplot and other outputs to the session temporary directory;
+12. Adding to the history of the genlight object, for later recall;
+13. Announcing the closure of the function for the user;
+14. Returning any parameters
+15. Closing the function
+
+We'll step through each of these features in more detail to ensure you understand their inclusion.
+
+#### Roxygen2 documentation
+
+Roxygen2 is an R package used in the documentation of functions, primarily for the generation of help() queries, documentation files (.Rd) and the description blurbs etc etc.
+
+INCLUDE PHOTO OF ROXYGEN2 DOCUMENTATION HERE
+
+#### Define the function
+
+The next step is to define the function and its inputs:
+
+INSERT PHOTOT OF DEFINTION
+
+#### Set the verbosity level
+
+Setting the verbosity allows the user to edit the verbosity of the output as required - including things such as function completion, output location, progress bars etc. There are 6 possible paramater values to choose from:
+
+**0 -- silent or fatal errors. Good for batch processing.** **1 -- notifies begin and end, and fatal errors.** **2 -- notifies warnings and progress log, in addition to above.** **3 -- reports progress and results summary, in addition to above.** **4 -- to be implemented.** **5 -- displays a full report.**
+
+This value can either be set when calling the function such as:
+
+INERT IMAGE
+
+Or one can set the global verbosity level using *verbosity \<- gl.set.verbosity(value=n)*.
+
+#### Apply checks of parameters
+
+We now need to apply checks to the input parameters to ensure the user supplied data matches the format specified. We can achieve a simple check with the utils.check.datatype, which checks the main data supplied fits one of the following data types
+
+-   Genlight
+-   dist
+-   fd
+-   matrix
+
+In addition you should apply your own parameter checks of user input. This ensures any errors that arise from incorrect formatting of data is explicitly mentioned as such in the function output. This avoids the outputiting of vague often verbose system errors that may arise instead and may be difficult for the user to debug. We can illustrate this with an example:
+
+INSERT EXAMPLE HERE
+
+```{r badexample}
+# random stuff insert - do later 
+```
+
+#### Basic flags
+
+Its important to flag the start of the script- to ensure the output displays when the job has commenced. We can do this with the utils.flag.start function:
+
+INSERT EXAMPLE
+
+In addition we also flag the start of the function with a \# DO THE JOB tag: such as:
+
+```{r badexample_2}
+thingy <- function(a,b){
+  
+  if(!(a == "num" | b == "num")){
+    stop("a and b wrong format")
+  }
+
+  # DO THE JOB
+  
+  output <- a + b
+  return(output)
+
+}
+```
+
+#### Display output
+
+Come back to it
+
+#### Finish up
+
+Come back to it
+
+### Have some style! Programming with style
+
+As a flexible programming language, R allows for a diversity of methods when tackling a problem. Consider the inclusion of packages designed to improve flow and structure and this effect is amplified even more so! As such it its important you write code not only for yourself but for those with whom you're working.
+
+As such perhaps the most important rule in this regard is to COMMENT!!!! By generously commenting your code (even where it may seem unnecessary), you lend your code a degree of readability that transcends the actual program itself. Even the most dense code can become more readable if commented correctly and it allows both yourself and other programmers to pick it up quickly and continue where you left off.
+
+In addition it is important to properly indent and space your code. Given that R is lazily compiled, that is to say compiled line by line, it lacks the strict indentation required of other, compiled languages, such as C, C++ or Fortran.
