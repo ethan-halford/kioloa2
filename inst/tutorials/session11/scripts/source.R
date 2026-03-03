@@ -1,7 +1,10 @@
 lm_eqn <-
   function(df,
-           r = manteltest$statistic,
-           pp = manteltest$signif) {
+           manteltest) {
+
+    r = manteltest$statistic
+    pp = manteltest$signif
+
     m <- lm(Dgen ~ Dgeo, df)
     eq <-
       substitute(

@@ -1,13 +1,19 @@
-
 ---
-title: "Landscape Genetics Workshop: IBD, IBB and IBR"
-output: html_document
-date: "2026-03-02"
-editor_options: 
-  markdown: 
-    wrap: 72
----
+title: "Session 11 - Landscape Genetics"
+author: "The dartR Team"
+date: | 
+    ![](images/dartR7.png){width=6cm}
+output:
+  learnr::tutorial:
+    progressive: false
+    allow_skip: true
+    theme: "united"
+    highlight: 'monochrome'
+    css: css/dartR_style.css
+runtime: shiny_prerendered
 
+description: "Kioloa2 Landscape Genetics tutorial"
+---
 
 ## Setup
 
@@ -192,6 +198,7 @@ gl_ibd1 <- gl.ibd(
 ```
 
 ```{r, gl_ibd1_plot,echo=FALSE,warning=FALSE,message=FALSE}
+source("scripts/source.R")
 Dgen_1 <- gl_ibd1$Dgen
 Dgeo_1 <- gl_ibd1$Dgeo
 
@@ -203,7 +210,7 @@ res_1 <-
 Dgeo_trans = "Dgeo"
 Dgen_trans = "Dgen"
 
-manteltest <-
+manteltest_1 <-
   vegan::mantel(Dgen_1, Dgeo_1, na.rm = TRUE, permutations = 999)
 
 ggplot(res_1) +
@@ -213,7 +220,7 @@ ggplot(res_1) +
   geom_point(aes(Dgeo, Dgen),size = 2,shape = 1) +
   guides(size = "none",color = guide_legend(title = "Populations")) +
   ylab(Dgen_trans) +
-  annotate("text",label = lm_eqn(res_1),
+  annotate("text",label = lm_eqn(res_1,manteltest_1),
            x = Inf,
            y = -Inf,
            parse = TRUE,
@@ -241,6 +248,7 @@ gl.ibd2 <- gl.ibd(
 ```
 
 ```{r, gl_ibd2_plot,echo=FALSE,warning=FALSE,message=FALSE}
+source("scripts/source.R")
 Dgen_2 <- gl.ibd2$Dgen
 Dgeo_2 <- gl.ibd2$Dgeo
 
@@ -252,7 +260,7 @@ res_2 <-
 Dgeo_trans = "Dgeo"
 Dgen_trans = "Dgen"
 
-manteltest <-
+manteltest_2 <-
   vegan::mantel(Dgen_2, Dgeo_2, na.rm = TRUE, permutations = 999)
 
 ggplot(res_2) +
@@ -262,7 +270,7 @@ ggplot(res_2) +
   geom_point(aes(Dgeo, Dgen),size = 2,shape = 1) +
   guides(size = "none",color = guide_legend(title = "Populations")) +
   ylab(Dgen_trans) +
-  annotate("text",label = lm_eqn(res_2),
+  annotate("text",label = lm_eqn(res_2,manteltest_2),
            x = Inf,
            y = -Inf,
            parse = TRUE,
