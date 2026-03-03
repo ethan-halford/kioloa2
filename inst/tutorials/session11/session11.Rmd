@@ -1,19 +1,13 @@
----
-title: "Session W11 - Landscape Genetics"
-author: "The dartR Team"
-date: | 
-    ![](images/dartR7.png){width=6cm}
-output:
-  learnr::tutorial:
-    progressive: false
-    allow_skip: true
-    theme: "united"
-    highlight: 'monochrome'
-    css: css/dartR_style.css
-runtime: shiny_prerendered
 
-description: "something something yasdfasa" 
 ---
+title: "Landscape Genetics Workshop: IBD, IBB and IBR"
+output: html_document
+date: "2026-03-02"
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
 
 ## Setup
 
@@ -43,7 +37,7 @@ Packages used in this tutorial:
 
 -   geosphere
 
-```{r setup, include=T}
+```{r setup, include=FALSE, echo=FALSE}
 library(dartRverse)
 library(dartR)
 library(tess3r)
@@ -58,42 +52,34 @@ library(ggplot2)
 library(dplyr)
 library(geosphere)
 library(rworldmap)
-
-.libPaths()
-sessionInfo()
-
+source("scripts/source.R")
 ```
 
 ## Introduction
 
-Genetic structure across landscapes/seascapes can arise from multiple
-mechanisms. In this tutorial, we'll walk through the three
-dispersal-driven hypotheses of landscape genetics:
+Genetic structure across landscapes/seascapes can arise from multiple mechanisms. In this tutorial, we'll walk through the three dispersal-driven hypotheses of landscape genetics:
 
-1.  **IBD** – Isolation by Distance
+1.  **IBD** -- Isolation by Distance
 
     -   dispersal is spatially limited
 
-2.  **IBB** – Isolation by Barrier
+2.  **IBB** -- Isolation by Barrier
 
     -   dispersal is restricted by barriers
 
-3.  **IBR** – Isolation by Resistance
+3.  **IBR** -- Isolation by Resistance
 
-    -   dispersal is influenced by landscape/seascape
-        heterogeneity/permeability
+    -   dispersal is influenced by landscape/seascape heterogeneity/permeability
 
-### What you’ll do in this tutorial:
+### What you'll do in this tutorial:
 
 -   Run IBD tests (population-based and individual-based)
 
 -   Use PCoA to visualise structure
 
--   Run TESS3 to explore IBB, and estimate ancestry coefficients with
-    spatial information
+-   Run TESS3 to explore IBB, and estimate ancestry coefficients with spatial information
 
--   Compute commute distance from a resistance surface and test IBR
-    using MLPE
+-   Compute commute distance from a resistance surface and test IBR using MLPE
 
 ### Learning outcomes
 
@@ -109,7 +95,7 @@ The goal of this turorial is to:
 
 *Session structure:*
 
-1.  Introduce the first worked example (Northern quoll – Pilbara)
+1.  Introduce the first worked example (Northern quoll -- Pilbara)
 
 2.  Visualise sampling locations
 
@@ -123,21 +109,17 @@ The goal of this turorial is to:
 
 7.  Compare hypotheses using model selection
 
-8.  Introduce the second worked example (corals – Maldives)
+8.  Introduce the second worked example (corals -- Maldives)
 
 ## Worked example 1
 
-This example is based on the Northern quoll in the Pilbara (Western
-Australia). The full study can be found here: Shaw et al. 2023:
-<https://doi.org/10.1111/cobi.13989>
+This example is based on the Northern quoll in the Pilbara (Western Australia). The full study can be found here: Shaw et al. 2023: <https://doi.org/10.1111/cobi.13989>
 
 Landscape genetics asks:
 
 What processes shape spatial genetic structure?
 
-In Pilbara northern quolls dispersal is relatively high, there are no
-obvious mountain barriers, but environmental heterogeneity may influence
-connectivity.
+In Pilbara northern quolls dispersal is relatively high, there are no obvious mountain barriers, but environmental heterogeneity may influence connectivity.
 
 We will now test this explicitly.
 
@@ -149,15 +131,9 @@ load("data/NorthernQuolls_tutorial.RData")
 
 ### Step 1: Define populations and visualise sampling locations
 
-Before we do any modelling, it’s worth getting a feel for the sampling
-design. Where are the samples? Are there obvious gaps? Are some areas
-heavily sampled and others sparse? This matters because spatial analyses
-can be very sensitive to uneven sampling.
+Before we do any modelling, it's worth getting a feel for the sampling design. Where are the samples? Are there obvious gaps? Are some areas heavily sampled and others sparse? This matters because spatial analyses can be very sensitive to uneven sampling.
 
-In many continuous systems there aren’t obvious “populations.” However,
-it can still be useful to create artificial groupings for initial data
-exploration and visualisation. In this dataset we’re using a 20 km
-buffer grouping as a simple “population”.
+In many continuous systems there aren't obvious "populations." However, it can still be useful to create artificial groupings for initial data exploration and visualisation. In this dataset we're using a 20 km buffer grouping as a simple "population".
 
 ```{r}
 # Prepare the data for mapping
@@ -198,66 +174,114 @@ leaflet(pts_df) |>
 
 ### Step 2: Test Isolation by Distance (IBD)
 
-First, let's test the most basic hypothesis: does genetic distance
-increase with geographic distance?
+First, let's test the most basic hypothesis: does genetic distance increase with geographic distance?
 
-We’ll do this two ways. The population-based test uses Fst among groups
-(so it’s asking whether “groups that are farther apart are more
-differentiated”).
+We'll do this two ways. The population-based test uses Fst among groups (so it's asking whether "groups that are farther apart are more differentiated").
 
-```{r}
+```{r, warning=FALSE,echo=FALSE,include=FALSE}
 # Population-based IBD (Fst)
-gl.ibd(
+gl_ibd1 <- gl.ibd(
   x = Quolls.gl,
   distance = "Fst",
   coordinates = "latlon",
   Dgeo_trans = "log(Dgeo)",
   permutations = 999,
-  plot.out = TRUE
+  plot.out = FALSE
 )
 
 ```
 
-Do you think this is a sensible idea when the population is likely
-continuous?
+```{r, gl_ibd1_plot,echo=FALSE,warning=FALSE,message=FALSE}
+Dgen_1 <- gl_ibd1$Dgen
+Dgeo_1 <- gl_ibd1$Dgeo
 
-Alternatively, we can use an individual-based test, Here, we're using
-Euclidean genetic distance among individuals.
+res_1 <-
+  data.frame(
+    Dgen = as.numeric(Dgen_1),
+    Dgeo = as.numeric(Dgeo_1))
 
-```{r}
+Dgeo_trans = "Dgeo"
+Dgen_trans = "Dgen"
+
+manteltest <-
+  vegan::mantel(Dgen_1, Dgeo_1, na.rm = TRUE, permutations = 999)
+
+ggplot(res_1) +
+  geom_smooth(aes(x = Dgeo, y = Dgen),method = "lm", se = TRUE) +
+  geom_point(aes(Dgeo, Dgen), size = 1) +
+  geom_point(aes(Dgeo, Dgen), size = 1)+
+  geom_point(aes(Dgeo, Dgen),size = 2,shape = 1) +
+  guides(size = "none",color = guide_legend(title = "Populations")) +
+  ylab(Dgen_trans) +
+  annotate("text",label = lm_eqn(res_1),
+           x = Inf,
+           y = -Inf,
+           parse = TRUE,
+           hjust = 1.05,
+           vjust = 0) +
+  xlab(Dgeo_trans)
+
+
+```
+
+Do you think this is a sensible idea when the population is likely continuous?
+
+Alternatively, we can use an individual-based test, Here, we're using Euclidean genetic distance among individuals.
+
+```{r, echo=FALSE,warning=FALSE,include=FALSE,warning=FALSE}
 # Individual-based IBD (Euclidean genetic distance)
-gl.ibd(
+gl.ibd2 <- gl.ibd(
   x = Quolls.gl,
   distance = "euclidean",
   coordinates = "latlon",
   Dgeo_trans = "log(Dgeo)",
   permutations = 999,
-  plot.out = TRUE
+  plot.out = FALSE
 )
 ```
 
-When you interpret this, it helps to keep two ideas in mind. First,
-significance is not the same as “strong.” With enough data, even a weak
-relationship can be statistically significant. Second, outliers can be
-informative - they’re often your first clue that something beyond pure
-distance is shaping connectivity.
+```{r, gl_ibd2_plot,echo=FALSE,warning=FALSE,message=FALSE}
+Dgen_2 <- gl.ibd2$Dgen
+Dgeo_2 <- gl.ibd2$Dgeo
+
+res_2 <-
+  data.frame(
+    Dgen = as.numeric(Dgen_2),
+    Dgeo = as.numeric(Dgeo_2))
+
+Dgeo_trans = "Dgeo"
+Dgen_trans = "Dgen"
+
+manteltest <-
+  vegan::mantel(Dgen_2, Dgeo_2, na.rm = TRUE, permutations = 999)
+
+ggplot(res_2) +
+  geom_smooth(aes(x = Dgeo, y = Dgen),method = "lm", se = TRUE) +
+  geom_point(aes(Dgeo, Dgen), size = 1) +
+  geom_point(aes(Dgeo, Dgen), size = 1)+
+  geom_point(aes(Dgeo, Dgen),size = 2,shape = 1) +
+  guides(size = "none",color = guide_legend(title = "Populations")) +
+  ylab(Dgen_trans) +
+  annotate("text",label = lm_eqn(res_2),
+           x = Inf,
+           y = -Inf,
+           parse = TRUE,
+           hjust = 1.05,
+           vjust = 0) +
+  xlab(Dgeo_trans)
+
+```
+
+
+When you interpret this, it helps to keep two ideas in mind. First, significance is not the same as "strong." With enough data, even a weak relationship can be statistically significant. Second, outliers can be informative - they're often your first clue that something beyond pure distance is shaping connectivity.
 
 Q: Do the results suggest that dispersal is spatially limited?
 
-A: We can see a moderate pattern of IBD. This suggests that dispersal is
-limited by geographic distance, but northern quolls have high capacity
-for dispersal. We can also see some outliers, suggesting there's more to
-the story.
+A: We can see a moderate pattern of IBD. This suggests that dispersal is limited by geographic distance, but northern quolls have high capacity for dispersal. We can also see some outliers, suggesting there's more to the story.
 
 ### **Step 3: Visualise population genetic structure with PCoA**
 
-IBD tells us whether genetic distance increases with geographic
-distance, but it doesn’t tell us whether there are *genetic* *clusters*
-indicative of discrete populations and/or potential barriers reducing
-gene flow among clusters. PCoA is a fast, visual first pass for this:
-strong structure usually shows up as distinct groupings, while weak or
-clinal structure looks more like a gradient with lots of overlap. It’s
-typically the first step in exploring population genetic structure.
+IBD tells us whether genetic distance increases with geographic distance, but it doesn't tell us whether there are *genetic* *clusters* indicative of discrete populations and/or potential barriers reducing gene flow among clusters. PCoA is a fast, visual first pass for this: strong structure usually shows up as distinct groupings, while weak or clinal structure looks more like a gradient with lots of overlap. It's typically the first step in exploring population genetic structure.
 
 ```{r, echo=FALSE,results='hide',include=FALSE}
 # Run PCoA
@@ -294,27 +318,15 @@ abline(h = 0, v = 0, lty = 3, col = "grey70")
 par(op)
 ```
 
-**Q:** What do the patterns suggest? Is there population genetic
-structure? Do different axes tell us different things? What does this
-imply for our landscape genetics hypotheses?\
+**Q:** What do the patterns suggest? Is there population genetic structure? Do different axes tell us different things? What does this imply for our landscape genetics hypotheses?\
 
-**A:** There is some clustering, but it overlaps and looks continuous.
-That suggests there may not be a hard barrier to dispersal in the
-Pilbara. It’s still worth testing IBB given the subtle signal, but we
-should do it in a way that accounts for IBD.
+**A:** There is some clustering, but it overlaps and looks continuous. That suggests there may not be a hard barrier to dispersal in the Pilbara. It's still worth testing IBB given the subtle signal, but we should do it in a way that accounts for IBD.
 
 ### Step 4: Test Isolation by Barrier (IBB) with TESS3
 
-Because the structure looks subtle and spatially continuous, we use
-TESS3 rather than STRUCTURE. TESS3 estimates ancestry coefficients while
-explicitly incorporating spatial information. In practice, it applies
-spatial regularisation that encourages nearby individuals to have
-similar ancestry unless the genetic data strongly suggest otherwise.
-This tends to stabilise inference when structure is weak and clinal.
+Because the structure looks subtle and spatially continuous, we use TESS3 rather than STRUCTURE. TESS3 estimates ancestry coefficients while explicitly incorporating spatial information. In practice, it applies spatial regularisation that encourages nearby individuals to have similar ancestry unless the genetic data strongly suggest otherwise. This tends to stabilise inference when structure is weak and clinal.
 
-We’ll do a quick run just so you can see how it works, and then we’ll
-load a pre-run object with more iterations/reps so the outputs are
-slightly more robust:
+We'll do a quick run just so you can see how it works, and then we'll load a pre-run object with more iterations/reps so the outputs are slightly more robust:
 
 ```{r,echo=F,include=F,results='hide'}
 # Create a genotype matrix (also used later)
@@ -358,12 +370,7 @@ plot(1:Kmax, rmse_min, type = "b", pch = 19,
 
 Q: How do we determine the best value for K?
 
-A: With strong discrete structure you often see a clear minimum. With
-weak or continuous structure, RMSE may keep gradually decreasing as K
-increases. In that case there isn’t a single “true” K, you often look
-for the sharpest drop (an elbow), then treat larger K as increasingly
-descriptive. Here the sharpest drop is at K = 2, but interpret it
-cautiously (especially because we can't get K = 1).
+A: With strong discrete structure you often see a clear minimum. With weak or continuous structure, RMSE may keep gradually decreasing as K increases. In that case there isn't a single "true" K, you often look for the sharpest drop (an elbow), then treat larger K as increasingly descriptive. Here the sharpest drop is at K = 2, but interpret it cautiously (especially because we can't get K = 1).
 
 Plot ancestry proportions:
 
@@ -389,13 +396,9 @@ barplot(
 axis(2); box()
 ```
 
-**Q:** What does the bar chart of ancestry proportions suggest? **A:**
-There’s substantial admixture.
+**Q:** What does the bar chart of ancestry proportions suggest? **A:** There's substantial admixture.
 
-Next we map where the ancestry signal falls across space. The
-interpolation is a visual summary (not a definitive spatial model), but
-it’s useful for describing the pattern: if there’s a gradient or split,
-where is it strongest, and where is the admixture zone?
+Next we map where the ancestry signal falls across space. The interpolation is a visual summary (not a definitive spatial model), but it's useful for describing the pattern: if there's a gradient or split, where is it strongest, and where is the admixture zone?
 
 ```{r}
 plot(
@@ -409,23 +412,13 @@ plot(
 )
 ```
 
-Here we see a broad northeast–southwest split with a wide admixture zone
-between two ancestral populations. This could reflect historical
-demography rather than a contemporary barrier. For example, major
-drainage divides that would have been more substantial barriers under
-wetter climates, a pattern also seen in geckos.
+Here we see a broad northeast--southwest split with a wide admixture zone between two ancestral populations. This could reflect historical demography rather than a contemporary barrier. For example, major drainage divides that would have been more substantial barriers under wetter climates, a pattern also seen in geckos.
 
 ### Step 5: Test Isolation by Resistance (IBR)
 
-Even without an obvious barrier, landscape heterogeneity can still shape
-connectivity. That’s the point of IBR: we test whether a
-resistance-aware distance explains genetic distances better than simple
-Euclidean distance.
+Even without an obvious barrier, landscape heterogeneity can still shape connectivity. That's the point of IBR: we test whether a resistance-aware distance explains genetic distances better than simple Euclidean distance.
 
-In Shaw et al. (2023), the R package ResistanceGA was used to select and
-combine layers into an optimised composite resistance surface. Here,
-we'll skip the optimisation (it’s slow and can be tricky to install) and
-instead load the final combined surface from the paper.
+In Shaw et al. (2023), the R package ResistanceGA was used to select and combine layers into an optimised composite resistance surface. Here, we'll skip the optimisation (it's slow and can be tricky to install) and instead load the final combined surface from the paper.
 
 ```{r}
 # Optimised combined Resistance surface (combined distance to water + silt)
@@ -440,10 +433,7 @@ rownames(xy) <- id_order
 
 ```
 
-We then compute genetic distance (our response variable), IBD-based
-distance, and commute distance, a resistance-based distance metric.
-Conceptually, it represents expected movement difficulty across the
-landscape while accounting for multiple possible pathways between sites.
+We then compute genetic distance (our response variable), IBD-based distance, and commute distance, a resistance-based distance metric. Conceptually, it represents expected movement difficulty across the landscape while accounting for multiple possible pathways between sites.
 
 ```{r}
 # Pairwise distances
@@ -467,21 +457,15 @@ rownames(CD) <- colnames(CD) <- id_order
 
 ```
 
-Once we’ve got genetic distance (G), Euclidean distance (E), and commute
-distance (CD), we turn them into a pairwise data frame. We then fit MLPE
-mixed models, which is the standard way to handle the non-independence
-of pairwise distances. Each individual appears in many pairwise
-comparisons, so we include random intercepts for both members of the
-pair: (1\|id1) + (1\|id2).
+Once we've got genetic distance (G), Euclidean distance (E), and commute distance (CD), we turn them into a pairwise data frame. We then fit MLPE mixed models, which is the standard way to handle the non-independence of pairwise distances. Each individual appears in many pairwise comparisons, so we include random intercepts for both members of the pair: (1\|id1) + (1\|id2).
 
-We’ll compare three models:
+We'll compare three models:
 
 1.  IBD only (genetic distance explained by Euclidean distance),
 
 2.  IBR only (genetic distance explained by commute distance),
 
-3.  and IBR + IBD (does commute distance explain something beyond
-    straight-line distance?).
+3.  and IBR + IBD (does commute distance explain something beyond straight-line distance?).
 
 ```{r}
 
@@ -534,46 +518,25 @@ anova(m_ibd, m_ibd_ibr)
 
 ```
 
-Q: Which hypothesis performs best in model selection? Does IBR improve
-fit beyond IBD?\
+Q: Which hypothesis performs best in model selection? Does IBR improve fit beyond IBD?\
 
-A: The combined IBD + IBR model has the lowest AIC, and adding the IBR
-layer significantly improves the model.
+A: The combined IBD + IBR model has the lowest AIC, and adding the IBR layer significantly improves the model.
 
-In the paper, proximity to water facilitated connectivity, likely
-because rocky habitat and dense vegetation along watercourses and gorges
-provides protection from predators during dispersal. Higher resistance
-was associated with areas with high silt content (including alluvial,
-coastal, and hardpan plains). A similar mechanism is plausible elsewhere
-in northern Australia: for example, divergent northern quoll populations
-across the Carpentaria Gap (claypans that appear to limit dispersal in
-multiple taxa). Some low-connectivity areas also showed reduced genetic
-diversity, highlighting them as candidates for future restoration
-efforts.
+In the paper, proximity to water facilitated connectivity, likely because rocky habitat and dense vegetation along watercourses and gorges provides protection from predators during dispersal. Higher resistance was associated with areas with high silt content (including alluvial, coastal, and hardpan plains). A similar mechanism is plausible elsewhere in northern Australia: for example, divergent northern quoll populations across the Carpentaria Gap (claypans that appear to limit dispersal in multiple taxa). Some low-connectivity areas also showed reduced genetic diversity, highlighting them as candidates for future restoration efforts.
 
-In this way, even subtle patterns of genetic structure at the individual
-level can provide valuable insights for ecology and conservation.
+In this way, even subtle patterns of genetic structure at the individual level can provide valuable insights for ecology and conservation.
 
 ## Worked example 2
 
-This example is based on Acropora corals in the Maldives. The full study
-can be found here: Meziere et al. 2025:
-<https://doi.org/10.1126/sciadv.adt2066>
+This example is based on Acropora corals in the Maldives. The full study can be found here: Meziere et al. 2025: <https://doi.org/10.1126/sciadv.adt2066>
 
-In the first example (Northern quolls), we used IBD primarily as a
-diagnostic tool, to ask: *does genetic distance increase with geographic
-distance, and how does that compare to IBB and IBR?*
+In the first example (Northern quolls), we used IBD primarily as a diagnostic tool, to ask: *does genetic distance increase with geographic distance, and how does that compare to IBB and IBR?*
 
-In this second example, we use the same core idea - an individual-level
-IBD analysis - but for a different purpose. Instead of asking *“Is there
-IBD?”*, we ask a more applied question:
+In this second example, we use the same core idea - an individual-level IBD analysis - but for a different purpose. Instead of asking *"Is there IBD?"*, we ask a more applied question:
 
-*If we observe an IBD slope of a certain magnitude, what does that imply
-about typical dispersal distances?*
+*If we observe an IBD slope of a certain magnitude, what does that imply about typical dispersal distances?*
 
-Here, managers restoring Acropora corals in the Maldives want to know
-how far offspring from restoration sites are likely to disperse. By
-combining:
+Here, managers restoring Acropora corals in the Maldives want to know how far offspring from restoration sites are likely to disperse. By combining:
 
 -   the slope of the IBD relationship, and
 
@@ -581,9 +544,7 @@ combining:
 
 we can estimate a characteristic dispersal scale.
 
-This example shows how the same IBD framework can move beyond hypothesis
-testing and into quantitative inference about dispersal. We then
-translate that dispersal scale into:
+This example shows how the same IBD framework can move beyond hypothesis testing and into quantitative inference about dispersal. We then translate that dispersal scale into:
 
 -   A dispersal kernel (probability density over distance), and
 
@@ -647,10 +608,7 @@ beta <- 0.00014  # slope of the regression
 
 ### Step 3: From IBD Slope to Dispersal Distance
 
-In this example, we use median values for each estimate. For real
-research, we would want to use probability distribution of each
-estimate, and calculate confidence intervals around each median values
-when reported (see Meziere et al., 2025).
+In this example, we use median values for each estimate. For real research, we would want to use probability distribution of each estimate, and calculate confidence intervals around each median values when reported (see Meziere et al., 2025).
 
 ```{r}
 Ne <- 9500            # effective population size obtained from NeEstimator
@@ -735,7 +693,4 @@ ggplot() +
 
 ```
 
-This example highlights that landscape genetic tools are not just for
-detecting structure - they can also be used to estimate ecologically
-meaningful parameters when the assumptions of the underlying models are
-appropriate.
+This example highlights that landscape genetic tools are not just for detecting structure - they can also be used to estimate ecologically meaningful parameters when the assumptions of the underlying models are appropriate.
