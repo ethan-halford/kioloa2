@@ -280,7 +280,6 @@ ggplot(res_2) +
 
 ```
 
-
 When you interpret this, it helps to keep two ideas in mind. First, significance is not the same as "strong." With enough data, even a weak relationship can be statistically significant. Second, outliers can be informative - they're often your first clue that something beyond pure distance is shaping connectivity.
 
 Q: Do the results suggest that dispersal is spatially limited?
