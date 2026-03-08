@@ -28,44 +28,6 @@ library("dartR.captive")
 library(dartRverse)
 ```
 
-# Rough overview of dartR for the developer
-
-1.  Introduction to basics of development
-
--   Starting with basics etc.
--   Writing functions
-
-2.  DartR style guide
-
--   Roxygen2 documentation at start of functions
--   Good practice for writing functions
--   Using gl.document for writing start of functions
-
-3.  Example - writing basic function
-
--   gl.something.basic - does ANYTHING
--   write basic function for printing or combining inputs something like that
-
-4.  Introduction to github
-
--   Repo's
--   Push/pull merge etc.
--   forking directories
-
-5.  Github specifically for dartR
-
--   fork directory
--   create local git repo on rstudio
--   create function - compile local copy - make sure package is installable - ie changes have broken the package
--   commit/push to forked repo
--   make pull/merge request from forked repo to original repo
-
-6.  Common errors/hangups
-
--   ie errors with local variables not being defined etc.
-
-7.  Roundup/questions etc.
-
 ## dartR for the developer: Introduction to developing for the dartR package
 
 *Session Presenters*
@@ -234,13 +196,13 @@ INSERT IMAGE OF DARTR WORKFLOW
 A repo or repository consists of the base from which all code is hosted. It contains a projects files, code and a history of the revisions done to said code. In addition is hosts branches - or copies of the original main branch - from which developers can work in isolation from the original code and edit at will. 
 
 
-![](images/Repo.png){width=65%}
+![](images/Repo.png){width=100%}
 
 
 As seen in the images below - the dartR.captive repo hosts a number of branches - each hosted by its respective developer. As such none of these developers directly edit the code present on the main branch - so as to avoid conflicts. 
 
 
-![](images/Repo_fork.png){width=65%}
+![](images/Repo_fork.png){width=100%}
 
 
 Clearly there is the potential for the local and remote branches established by individual developers to diverge from the work that has been contributed by others. To avoid working on stale branches, developers should follow the below procedure:
@@ -252,7 +214,7 @@ Clearly there is the potential for the local and remote branches established by 
 
 
 
-![](images/Workflow.png){width=65%}
+![](images/Workflow.png){width=100%}
 
 
 
@@ -262,11 +224,11 @@ As an alternate - you can also fork a directory and then push any changes made -
 
 To begin you simply press the fork button at the top of the repo home page: 
 
-![](images/Fork_yeah.png){width=65%}
+![](images/Fork_yeah.png){width=100%}
 
 This will then take you a page where you can specify how you'd like to fork the original page. 
 
-![](images/Fork.png){width=65%}
+![](images/Fork.png){width=100%}
 
 
 ### 3. Example function - gl.does.something
@@ -423,49 +385,50 @@ We will now pull this fork into a new R repo - test if the function works within
 We'll start by creating a new R project under version control. Go to 'New Project' then version control, then git - upon which you should get a screen like below: 
 
 
-![](images/R_git.png){width=65%}
+![](images/R_git.png){width=100%}
 
 
 Then name the cloned repo and insert the repository URL for the github repo you'd like to clone. We can now create a new fork for working in. Go to the git tab and click 'New branch' upon which you'll be greeted with the following screen: 
 
-![](images/New_fork.png){width=65%}
+![](images/New_fork.png){width=100%}
 
 This will then pull the contents of the R repo with a screen such as: 
 
-![](images/Pull_ting.png){width=65%}
+![](images/Pull_ting.png){width=100%}
 
 
 After creating a new R file we can then paste in the contents of our R function - with a useful name - in this case gl.document.R. We can then attempt to install the package to test it can built from scratch without error: 
 
-![](images/Install.png){width=65%}
+![](images/Install.png){width=100%}
 
 Given it was successful we can now push our changes to the original repo - which upon being successful we should get the following message: 
 
-![](images/Push.png){width=65%}
+![](images/Push.png){width=100%}
 
 
 We can now attempt to merge our dev branches to the regular dev_branch. 
 
 
-![](images/Merge.png){width=65%}
+![](images/Merge.png){width=100%}
 
 Having completed the pull request we can see if the branches can be merged successfully. 
 
 
 
-![](images/Complete_request.png){width=65%}
+![](images/Complete_request.png){width=100%}
 
 As we can see the branches can be merged without trouble - so we can go ahead and approve the merged request. 
 
 
 
-![](images/See_push.png){width=65%}
+![](images/See_push.png){width=100%}
 
 
 Looking at the dev page of our fork we can now see the dev branch has had a recent push (as expected) with our description in the R folder. As such our push was successful and our changes have been added to the repository. 
 
 
-
+## Exercise 
+Having now learned how to fork, push and pull to repositories - we can now practice our new developer skills! If you'd like you can fork my fork of the dartR.captive repo - dartR.testing and attempt to push your own changes to the dev branch. I will then go through these attempted pushes and accept them thus adding them to the dev branch of dartR.testing!
 
 
 
