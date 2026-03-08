@@ -446,5 +446,12 @@
     "title": "8   W04 Genetic Structure",
     "section": "Further Study",
     "text": "Further Study\n\nReadings\n• Evanno et al. 2005 – Detecting the number of clusters (ΔK).\n• Lawson et al. 2018 – How not to over-interpret STRUCTURE/ADMIXTURE plots.\n• Wang 2017 – Common pitfalls when using STRUCTURE.\n• Raj et al. 2014 – fastSTRUCTURE.\n• Frichot et al. 2014 – sNMF.\n• Wang 2022 – POPCLUSTER.\n• Kopelman et al. 2015 – CLUMPAK.\n• Jakobsson & Rosenberg 2007 – CLUMPP.\n\n\n \n\n \n\n \n\n \n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\nDevloo-Delva, Floriaan, Christopher P Burridge, Peter M Kyne, Juerg M Brunnschweiler, Demian D Chapman, Patricia Charvet, Xiao Chen, et al. 2023. “From Rivers to Ocean Basins: The Role of Ocean Barriers and Philopatry in the Genetic Structuring of a Cosmopolitan Coastal Predator.” Ecology and Evolution 13 (2): e9837.\n\n\nDevloo-Delva, Floriaan, Gregory E Maes, Sebastián I Hernández, Jaime D Mcallister, Rasanthi M Gunasekera, Peter M Grewe, Robin B Thomson, and Pierre Feutry. 2019. “Accounting for Kin Sampling Reveals Genetic Connectivity in Tasmanian and New Zealand School Sharks, Galeorhinus Galeus.” Ecology and Evolution 9 (8): 4465–72.\n\n\nNikolic, Natacha, Floriaan Devloo-Delva, Diane Bailleul, Ekaterina Noskova, Clément Rougeux, Chrystelle Delord, Philippe Borsa, et al. 2023. “Stepping up to Genome Scan Allows Stock Differentiation in the Worldwide Distributed Blue Shark Prionace Glauca.” Molecular Ecology 32 (5): 1000–1019."
+  },
+  {
+    "objectID": "inst/tutorials/sessionX_forDeveloper/sessionX_forDeveloper.html#exercise",
+    "href": "inst/tutorials/sessionX_forDeveloper/sessionX_forDeveloper.html#exercise",
+    "title": "5  For the developer",
+    "section": "Exercise",
+    "text": "Exercise\nHaving now learned how to fork, push and pull to repositories - we can now practice our new developer skills! If you’d like you can fork my fork of the dartR.captive repo - dartR.testing and attempt to push your own changes to the dev branch. I will then go through these attempted pushes and accept them thus adding them to the dev branch of dartR.testing!"
   }
 ]
