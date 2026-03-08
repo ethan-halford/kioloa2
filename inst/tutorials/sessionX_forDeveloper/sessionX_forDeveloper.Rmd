@@ -20,11 +20,7 @@ klippy::klippy(position="right", color="black")
 ```
 
 ```{r setup, include=FALSE}
-library(gbRd)
 library(tools)
-library(semantic.dashboard)
-devtools::install_github("https://github.com/green-striped-gecko/dartR.captive/tree/dev_ethan")
-library("dartR.captive")
 library(dartRverse)
 ```
 

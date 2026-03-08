@@ -22,12 +22,15 @@ klippy::klippy(position="right", color="black")
 ```{r setup, include=FALSE}
 library(gbRd)
 library(tools)
-library(semantic.dashboard)
 devtools::install_github("https://github.com/green-striped-gecko/dartR.captive/tree/dev_ethan")
 library("dartR.captive")
 library(dartRverse)
-knitr::opts_chunk$set(echo = FALSE)
+library(related)
+library(reshape2)
+library(data.table)
+library(tidyverse)
 
+knitr::opts_chunk$set(echo = FALSE)
 pigTest <- readRDS("data/pigTest.rds")
 sheepTest <- readRDS("data/sheepTest.rds")
 
@@ -35,8 +38,10 @@ sheepTest <- readRDS("data/sheepTest.rds")
 setup_item <- readRDS("data/setup_item.rds")
 LSWt111Sim <- readRDS("data/LSWt111.rds")
 
-
+source("scripts/utils.functions.diagnostics.relatedness.r")
+source("scripts/utils.classes.diagnostics.relatedness.r")
 source("scripts/infer_paternal_genotypes.R")
+source("scripts/gl.diagnostics.relatedness.r")
 
 ```
 
@@ -44,62 +49,57 @@ source("scripts/infer_paternal_genotypes.R")
 
 Session Presenters
 
-![](images/Ethan_image.png){width="30%"} - Ethan Halford
-
 ------------------------------------------------------------------------
 
 ### Learning outcomes
 
 In this session we will learn the basics of calculating relatedness within the dartRverse.
 
-
 ------------------------------------------------------------------------
 
-## Session overview 
+## Session overview
 
 -   **Introduction to Calculating Relatedness and the concept of IBD**
     -   Brief introduction to the concept of genetic relatedness
     -   What does it mean for individuals to be Identical By Descent and how to calculate an IBD coefficient
-    -   Specific methods of calculating relatedness - an overview 
+    -   Specific methods of calculating relatedness - an overview
 -   **Relatedness in dartR**
-    -   Calculating relatedness in dartR - what functionality currently exists 
-    -   Main functions and their use 
+    -   Calculating relatedness in dartR - what functionality currently exists
+    -   Main functions and their use
 -   **Pedigrees - their use**
     -   What is a pedigree?
-    -   Their use in calculating relatedness 
-    -   Using pedigrees within dartR 
+    -   Their use in calculating relatedness
+    -   Using pedigrees within dartR
 -   **Simulation for relatedness - basics**
-    -   Brief follow on from Bernd Gruber's session 
-    -   Overview for inputs and their meaning 
-    -   Use of simulations to compare methods of calculating relatedness 
-    -   Interpreting output 
+    -   Brief follow on from Bernd Gruber's session
+    -   Overview for inputs and their meaning
+    -   Use of simulations to compare methods of calculating relatedness
+    -   Interpreting output
 -   **Adding complexity - use of EMIDB9**
-    -   EMIDB9 - brief recap of introduction 
-    -   How to install EMIBD9 
+    -   EMIDB9 - brief recap of introduction
+    -   How to install EMIBD9
 -   **Case Study 1 - Pig breeding dataset**
-    -   Introduction to the pig breeding data set 
-    -   Cleanup and data preparation 
-    -   Comparison of methods 
+    -   Introduction to the pig breeding data set
+    -   Cleanup and data preparation
+    -   Comparison of methods
 -   **Case Study 2 - Soay sheep dataset**
-    -   Introduction to the Soay sheep dataset 
-    -   Cleanup and data preparation 
-    -   Comparison of methods 
+    -   Introduction to the Soay sheep dataset
+    -   Cleanup and data preparation
+    -   Comparison of methods
 -   **Inferring an unknown relative - using COLONY**
-    -   Intro to COLONY and problem at large 
-    -   Reading in data and basic cleanup 
-    -   Downloading and installing COLONY binaries 
-    -   COLONY run - interpreting output 
+    -   Intro to COLONY and problem at large
+    -   Reading in data and basic cleanup
+    -   Downloading and installing COLONY binaries
+    -   COLONY run - interpreting output
     -   Matching unknown SNP with individual in population]
 -   **Additional reading**
-    -   References and additional reading 
+    -   References and additional reading
 -   **Exercises**
-    -   Exercises to work through 
-    -   Input participants own data 
--   **Wrap up** 
+    -   Exercises to work through
+    -   Input participants own data
+-   **Wrap up**
 
 ------------------------------------------------------------------------
-
-
 
 ## Introduction to Genetic relatedness
 
@@ -109,34 +109,29 @@ Parentage analysis is highly useful for the estimation of relatedness across a v
 
 The ability to estimate relatedness is a highly useful tool and sees use across a variety of fields, including but not limited to: conservation, agriculture and human genomics. In estimating relatedness, one can succinctly and accurately measure a variety of genetic forces that may be at play within a population, such as: sexual selection, effective population size, speciation and natural selection.
 
-
 Estimating how related two individuals are is fundamental in ecological restoration, biodiversity conservation and agricultural settings, providing an important metric in the management of breeding programs, small populations, and for providing understanding of mating dynamics, inbreeding and a host of other key parameters.
 
 The basis for the most popular estimators is the concept of identical by descent -- or IBD; in which two alleles are identical if they are copies of the same allele found in a reference population. Relatedness between two individuals is therefore equal to the proportion of alleles shared between them which are IBD. Kinship, which is a similar measure -- is the probability that two alleles, one taken from each individual, are IBD . As such, kinship is equal to half the relatedness value for any two individuals -- given that it considers ..... As described in wang (X year), we summarise....
 
-
 ------------------------------------------------------------------------
-
 
 #### Methods of estimating relatedness
 
 Oliehoek et al (2005) summarized contemporary methods as being categorized into 3 distinct groups:
 
-There are a variety of methods for estimating relatedness, however we will focus on 3 distinct methods, as described by Oliehoek et al; those being: 
+There are a variety of methods for estimating relatedness, however we will focus on 3 distinct methods, as described by Oliehoek et al; those being:
 
-
-1. **Those using relationship between additive genetic relatedness – r, population genetic co-ancestry and molecular co-ancestry.**\
-2. **Those using the relationship between additive genetic relatedness and two gene and four gene coefficients of identity in “non-inbred” populations and consists of Wang (2002) and Lynch and Ritland (1999) and its associated spin offs**\
-3. **Queller and Goodnight**\
-
+1.  **Those using relationship between additive genetic relatedness -- r, population genetic co-ancestry and molecular co-ancestry.**\
+2.  **Those using the relationship between additive genetic relatedness and two gene and four gene coefficients of identity in "non-inbred" populations and consists of Wang (2002) and Lynch and Ritland (1999) and its associated spin offs**\
+3.  **Queller and Goodnight**\
 
 However for the purposes of a general introduction we only focus on the first two, with the addition of Jinliang Wang's most recent estimator - EMIBD9.
 
-#### 1.  Additive genetic relatedness methods
+#### 1. Additive genetic relatedness methods
 
 As described above -- these estimators make use of estimates of coancestry -- or the probability that two alleles drawn at random, one from each individual, -- are IBD. Coancestry and relatedness are expressed relative to a base population -- in which no alleles are IBD, hence the co-ancestry between founders is 0.
 
-These estimators - make use of the molecular similarity index - referring to a single locus in a pair of individuals - defined as the probability that two marker alleles drawn from two individuals are IBD. Alleles that are molecularly identical in the base population are deemed alike in state (AIS). 
+These estimators - make use of the molecular similarity index - referring to a single locus in a pair of individuals - defined as the probability that two marker alleles drawn from two individuals are IBD. Alleles that are molecularly identical in the base population are deemed alike in state (AIS).
 
 Problems arise when estimating the allele frequencies for the base population - from which all other estimates are drawn. If the average level of AIS is incorrectly estimated - the resulting estimate will be biased accordingly. If it is underestimated - then the "further back" in time the base population is set - leading to an increase in estimated relatedness.
 
@@ -144,13 +139,13 @@ The inverse is also true - an overestimation of AIS will result in an underestim
 
 ------------------------------------------------------------------------
 
-#### 2.  Additive genetic relatedness and two and four gene coefficients
+#### 2. Additive genetic relatedness and two and four gene coefficients
 
 These estimators consider instead the relationship between relatedness and the two and four gene coefficients of identity in non-inbred populations. Lynch and Ritland developed an estimator based on regression of genotype probabilities of one individual on genotype of the other individual of a pair. Thus these include the probability that at a certain locus - a single allele in individual x is IBD to a single allele in individual y and also the probability that both alleles in individual x are IBD to both alleles in individual y.
 
 ------------------------------------------------------------------------
 
-#### 3.  EMIBD9
+#### 3. EMIBD9
 
 The EMIBD9 estimator differs from those previously mentioned -- given it use of a maximum likelihood method. In particular it uses the estimation of 9 condensed modes of IBD originally described by Albert Jacquard (1972) -- which present the different methods by which 2 individuals at biallelic loci can share IBD alleles. Wang attempts to counteract the bias inherent in the previously mentioned methods - particulary when dealing with inbred populations. In particular he attempts to counter the assumption oft used - of drawing allele frequencies from the same population for which relatedness is attempting to be estimated. Given the assumptions of highly outbred and unrelated populations are frequently violated in such cases - this results in an underestimate of closely related individuals and an overestimate of unrelated/distantly related individuals. To counteract this - Wang proposes the joint estimation of both allele frequencies and dyad probabilities from a sample of genotypes.
 
@@ -160,10 +155,11 @@ In addition, multiple studies have failed to come to a consensus with regards to
 
 As such it becomes evident that parentage is a complex, and highly subjective subject in many regards, with a variety of estimators providing for a wide degree of accuracy and specificity across varying circumstances.
 
+```{=tex}
 \begin{center}
 ![](images/dyads.png)
 \end{center}
-
+```
 ## Introduction to relatedness in dartR
 
 ### Intro
@@ -266,24 +262,23 @@ ref_variables <- read.csv("ref_variables.csv")
 sim_variables <- read.csv("sim_variables.csv")
 ```
 
-### Brief overview of Reference and Simulation parameters. 
+### Brief overview of Reference and Simulation parameters.
+
 As defined in the dartR.sim documentation there are more than X parameters one can edit when setting up a simulation. For our purposes we will focusing on those having the most pronounced effects on relatedness.
 
-#### Chromosome length/chunk 
-- Chunk Number - # of chromosome chunks 
-  - Chunk_bp - number of base pairs per chromosome chunk 
-  - Chunk_cm - number of centimorgans per chromosome chunk 
+#### Chromosome length/chunk
 
-These settings are all functions of chromosome length - defining the number of base pairs found along each chromosome. As discussed above, relatedness is partially a function of chromosome length - such that increasing the average length induces X result and decreasing it induces Y result - take caution in this regard. 
+-   Chunk Number - \# of chromosome chunks
+    -   Chunk_bp - number of base pairs per chromosome chunk
+    -   Chunk_cm - number of centimorgans per chromosome chunk
 
-#### Simulation variables 
-- Replace parents - whether parents reproduce more than once 
-Influences number of offspring found within population - obviously has implications for relatedness ..... 
+These settings are all functions of chromosome length - defining the number of base pairs found along each chromosome. As discussed above, relatedness is partially a function of chromosome length - such that increasing the average length induces X result and decreasing it induces Y result - take caution in this regard.
 
+#### Simulation variables
 
-- Chromosome_name - chromosome from which to extract allele frequencies 
-Influences reference allele frequencies - determines reference allele frequency from which estimates of IBD are drawn. As such this choice has an out sized effect on estimates of relatedness. 
+-   Replace parents - whether parents reproduce more than once Influences number of offspring found within population - obviously has implications for relatedness .....
 
+-   Chromosome_name - chromosome from which to extract allele frequencies Influences reference allele frequencies - determines reference allele frequency from which estimates of IBD are drawn. As such this choice has an out sized effect on estimates of relatedness.
 
 ### Your first simulation run
 
@@ -451,7 +446,7 @@ sheepDiag@plotList$Iteration1[[2]]
 
 As expected - all methods held up to half-siblings, broadly congruent with the manual coding results - as seen by the red dotted line. There is a high degree of variance present for full-sibs (NOT SURE HAVE TO READ UP AS TO WHY). In addition all methods appear to greatly overestimate the general relatedness of the population evidenced by the plots seen for the half first and second cousins.
 
-## Inferring an unknown relative - COLONY 
+## Inferring an unknown relative - COLONY
 
 COLONY is a program developed by Jinliang Wang at the ZSL for the inference of parentage and sibship from multilocus genelogical data. Through the use of a full-pedigree approach - COLONY can more accurately infer relatedness, however at the cost of an increase in computational demands. Samples are assumed to be taken from a large randomly mating population. Individuals are then partioned into three subsamples - offspring, candidate father and candidate mother. Offspring are either full-sibs, half-sibs or unrelated. - Come back to it.
 
@@ -512,16 +507,13 @@ For this tutorial will we focus on UNIX systems (Linux/MacOS).
 
 After downloading and unwrapping the relevant folder - we must prepare the binaries for use by R. Step by step instructions can be found in the image below.
 
-\begin{center}
-![](images/COLONY_Instructions.png){width="75%"}
-\end{center}
+\\begin{center} ![](images/COLONY_Instructions.png){width="75%"} \\end{center}
 
-First we should navigate to the folder containing the binaries; in this case its found in my downloads, be sure to use the specific directory in which the binary is stored on your computer. 
+First we should navigate to the folder containing the binaries; in this case its found in my downloads, be sure to use the specific directory in which the binary is stored on your computer.
 
 Next we make the binaries executable, using the chmod u+x command, as seen above. On Unix systems (MacOs/Linux) this must be done for both the colony2s.out and ColonyBatchRun.out files.
 
-Having completed these steps, we can check our privileges for the files to ensure our commands have worked. Using ls -l /path/to/file (as above), we can see we have given ourselves read/write access to both files - ensuring they are usable by COLONY. 
-
+Having completed these steps, we can check our privileges for the files to ensure our commands have worked. Using ls -l /path/to/file (as above), we can see we have given ourselves read/write access to both files - ensuring they are usable by COLONY.
 
 #### 5. Preparing data
 
@@ -571,7 +563,7 @@ combineR <- combineR %>%
 
 ```
 
-We can now perform a quick PCA to check if the COLONY results are plasuible. 
+We can now perform a quick PCA to check if the COLONY results are plasuible.
 
 ```{r, bellaPCA}
 combineR@pop <- as.factor(c(rep("offspring", 24), "mom", "dad"))
@@ -580,23 +572,19 @@ gl.pcoa.plot(bellaPCA, combineR)
 
 ```
 
-As expected we see the parents segregate to two separate axis, with the offspring being equidistant from both - as expected in individuals sharing 50% of each parents DNA. 
+As expected we see the parents segregate to two separate axis, with the offspring being equidistant from both - as expected in individuals sharing 50% of each parents DNA.
 
-#### 6. Finding the father in the population 
-Having successfully created an SNP fingerprint for a simulated father within our data set - our goal is now to found said father within the remaining individuals of the population. 
+#### 6. Finding the father in the population
 
-Whilst there exists a plethora of potential methods by which we can match an unknown SNP set to an individual within a population - we've elected to use a simple method - hamming distance, as deployed in the find-by-SNP repo github. Hamming distance measures the number of positions at which corresponding strings differ, and as such is an efficient method for comparing SNP sets - being encoded in bits - either 0, 1 or 2. 
+Having successfully created an SNP fingerprint for a simulated father within our data set - our goal is now to found said father within the remaining individuals of the population.
 
+Whilst there exists a plethora of potential methods by which we can match an unknown SNP set to an individual within a population - we've elected to use a simple method - hamming distance, as deployed in the find-by-SNP repo github. Hamming distance measures the number of positions at which corresponding strings differ, and as such is an efficient method for comparing SNP sets - being encoded in bits - either 0, 1 or 2.
 
-- Potential models to use 
-  - littleblackfish - find by SNP 
-  - cran/hip hop 
+-   Potential models to use
+    -   littleblackfish - find by SNP
+    -   cran/hip hop
 
-
-
-
-
-#### X. Simulation run - dont think is neccessary - might remove 
+#### X. Simulation run - dont think is neccessary - might remove
 
 We can now run a simulation and analyse the output using the gl.diagnostics.relatedness function form the dartR.captive package.
 
