@@ -1,0 +1,25 @@
+ClusterIndex Probability          OffspringID             FatherID             MotherID
+           1      0.9045          Bella_egg_1                   *1                   #1
+           2      0.9868          Bella_egg_9                   *2                   #2
+           2      0.9868         Bella_egg_17                   *2                   #2
+           3      0.9039          Bella_egg_2                   *3                   #3
+           3      0.9039         Bella_egg_19                   *7                   #3
+           3      0.9039          Bella_egg_6                   *7                  #10
+           4      0.9995         Bella_egg_10                   *4                   #4
+           4      0.9995          Bella_egg_3                   *4                   #6
+           4      0.9995          Bella_egg_4                   *8                   #8
+           4      0.9995          Bella_egg_5                   *8                   #4
+           4      0.9995         Bella_egg_15                  *13                   #4
+           4      0.9995         Bella_egg_23                  *14                   #8
+           5      0.9881         Bella_egg_18                   *5                   #5
+           5      0.9881         Bella_egg_20                   *9                   #5
+           5      0.9881         Bella_egg_21                  *11                   #5
+           5      0.9881         Bella_egg_14                  *11                  #11
+           5      0.9881         Bella_egg_22                  *12                  #12
+           5      0.9881          Bella_egg_7                  *12                  #11
+           5      0.9881          Bella_egg_8                   *9                  #11
+           6      1.0000         Bella_egg_11                   *6                   #7
+           6      1.0000         Bella_egg_12                   *6                   #7
+           7      1.0000         Bella_egg_13                  *10                   #9
+           8      0.7272         Bella_egg_16                  *15                  #13
+           8      0.7272         Bella_egg_24                  *16                  #13

@@ -338,7 +338,10 @@ pigFilter<- gl.filter.monomorphs(pigFilter,verbose = 5)
 
 ```{r filter-call, echo=T, results="hide"}
 pigFilter <- gl.filter.callrate(pigFilter,method = "loc", threshold = 0.95,verbose = 5)
+
 ```
+
+
 
 Having filtered for a variety of metrics such as call rate and monomorphs we will now create a PCOA plot to examine they extent of genetic structure extent within the population
 
@@ -354,6 +357,7 @@ As seen, there appears to be quite strong genetic structure within the populatio
 ```{r diag-One, echo=TRUE}
 diagOne <- readRDS("data/diagOne.rds")
 diagOne@plotList$Iteration1[[1]]
+help("gl.diagnostics.relatedness")
 ```
 
 ```{r diag-One_two, echo=TRUE}
@@ -446,10 +450,7 @@ sheepDiag@plotList$Iteration1[[2]]
 
 As expected - all methods held up to half-siblings, broadly congruent with the manual coding results - as seen by the red dotted line. There is a high degree of variance present for full-sibs (NOT SURE HAVE TO READ UP AS TO WHY). In addition all methods appear to greatly overestimate the general relatedness of the population evidenced by the plots seen for the half first and second cousins.
 
-## Inferring an unknown relative - COLONY
-
-COLONY is a program developed by Jinliang Wang at the ZSL for the inference of parentage and sibship from multilocus genelogical data. Through the use of a full-pedigree approach - COLONY can more accurately infer relatedness, however at the cost of an increase in computational demands. Samples are assumed to be taken from a large randomly mating population. Individuals are then partioned into three subsamples - offspring, candidate father and candidate mother. Offspring are either full-sibs, half-sibs or unrelated. - Come back to it.
-
+## Inferring an unknown relative 
 ### The problem
 
 You have been breeding a small hatch of central bearded Dragons (Pogona Vitticeps), for the purposes of a full genome study. You have a highly fecund female - LSWt111 - who has had a clutch of 24 eggs. The issue arises in that you have no idea who the potential father could be - there are numerous candidate males within the enclosure. As such you need to reconstruct a paternal genotype from the SNP data you have for LSWt111 and her offspring.
