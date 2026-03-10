@@ -20,11 +20,7 @@ klippy::klippy(position="right", color="black")
 ```
 
 ```{r setup, include=FALSE}
-library(gbRd)
 library(tools)
-library(semantic.dashboard)
-devtools::install_github("https://github.com/green-striped-gecko/dartR.captive/tree/dev_ethan")
-library("dartR.captive")
 library(dartRverse)
 ```
 
@@ -42,7 +38,7 @@ As an open-source project dartR encourages its users to actively contribute to t
 
 That being said, open source is not a synonym for free for all! To ensure the stability and condition of the package remains high, there are a number of rules we must adhere to when developing new features.
 
-As such in this tutorial, we'll be providing an introduction as to the means by which you can become a developer, and actively contribute to the package. We'll introduce you to the style guide, how to use it in the development of functions, provide a brief intro to github and how to manage pushing, pulling, merging and forking! By the end you'll be a development pro, etc. etc. ...... not done yet
+As such in this tutorial, we'll be providing an introduction as to the means by which you can become a developer, and actively contribute to the package. We'll introduce you to the style guide, how to use it in the development of functions, provide a brief intro to github and how to manage pushing, pulling, merging and forking! By the end you'll be a development pro!
 
 ## Session overview
 
@@ -100,13 +96,65 @@ We'll step through each of these features in more detail to ensure you understan
 
 Roxygen2 is an R package used in the documentation of functions, primarily for the generation of help() queries, documentation files (.Rd) and the description blurbs etc etc.
 
-INCLUDE PHOTO OF ROXYGEN2 DOCUMENTATION HERE
+```{r gl.tingbrev_2}
+#' @name gl.document
+#' @title Generate a roxygen2 Documentation Template for a Function
+#' @description
+#' Creates a skeleton \code{roxygen2} documentation file for a specified 
+#' function. The generated file contains standard documentation fields 
+#' including title, description, parameters, details, return value, examples, 
+#' and references. The output is written as a new \code{.R} file in the 
+#' specified directory.
+#'
+#' The function inspects the formal arguments of the target function and 
+#' automatically generates \code{@param} entries for each argument. This 
+#' provides a structured starting point for developing consistent 
+#' documentation across a package.
+#'
+#' @param func_name Name of the function to be documented (unquoted).
+#' @param author_name Character string specifying the author of the function.
+#' @param example_dataset Name of an example dataset to include in the 
+#' documentation examples (currently placeholder, not implemented).
+#' @param outputDir Character string specifying the directory where the 
+#' documentation file will be written. The file will be named 
+#' \code{<func_name>.R}.
+#'
+#' @details 
+#' The function constructs a list of standard documentation fields and writes 
+#' them in roxygen2 format to a new file connection. Parameter names are 
+#' extracted using \code{formals()} and written as placeholder entries for 
+#' subsequent manual editing.
+#' 
+#' The generated template includes the following sections:
+#' \itemize{
+#'   \item \code{@name}
+#'   \item \code{@title}
+#'   \item \code{@description}
+#'   \item \code{@param}
+#'   \item \code{@details}
+#'   \item \code{@return}
+#'   \item \code{@author}
+#'   \item \code{@examples}
+#'   \item \code{@references}
+#' }
+#'
+```
 
 #### Define the function
 
 The next step is to define the function and its inputs:
 
-INSERT PHOTOT OF DEFINTION
+```{r,define_function}
+gl.filter.callrate <- function(x, 
+method = "loc", 
+threshold = 0.95, 
+mono.rm = FALSE, 
+recalc = FALSE, 
+recursive = FALSE, 
+plot = TRUE, 
+bins = 25, 
+verbose = NULL) {} 
+```
 
 #### Set the verbosity level
 
@@ -116,7 +164,10 @@ Setting the verbosity allows the user to edit the verbosity of the output as req
 
 This value can either be set when calling the function such as:
 
-INERT IMAGE
+```{r,define_function,exercise=T}
+# SET VERBOSITY
+check_one <- gl.basic.stats(possums.gl,verbose = 4)
+```
 
 Or one can set the global verbosity level using *verbosity \<- gl.set.verbosity(value=n)*.
 
@@ -131,17 +182,24 @@ We now need to apply checks to the input parameters to ensure the user supplied 
 
 In addition you should apply your own parameter checks of user input. This ensures any errors that arise from incorrect formatting of data is explicitly mentioned as such in the function output. This avoids the outputiting of vague often verbose system errors that may arise instead and may be difficult for the user to debug. We can illustrate this with an example:
 
-INSERT EXAMPLE HERE
+```{r badexample,exercise=T}
+ # FUNCTION SPECIFIC ERROR CHECKING
+pkg <- "HardyWeinberg"
+if (!(requireNamespace(pkg, quietly = TRUE))) {
+	stop(error("Package",pkg," needed for this function to work. Please install it."))
+}
 
-```{r badexample}
-# random stuff insert - do later 
 ```
 
 #### Basic flags
 
 Its important to flag the start of the script- to ensure the output displays when the job has commenced. We can do this with the utils.flag.start function:
 
-INSERT EXAMPLE
+```{r badexample,exercise=T}
+# FLAG SCRIPT START
+   funname <- match.call()[[1]]
+   utils.flag.start(func=funname,v=verbose)
+```
 
 In addition we also flag the start of the function with a \# DO THE JOB tag: such as:
 
@@ -161,12 +219,29 @@ thingy <- function(a,b){
 ```
 
 #### Display output
+We display graphical output using ggplot compatible plots, which scale nicely depending on the RStudio configuration particular users have in place. To do this we use packages ggplot and patchwork (see https://patchwork.data-imaginist.com) For example:
 
-Come back to it
+```{r badexample_3,exercise=T}
+# DISPLAY GRAPHICS
+ # Boxplot
+ p1 <- ggplot(ind.call.rate, aes(y=ind.call.rate)) +
+geom_boxplot(color=plot_colours[1], fill=plot_colours[2]) +
+coord_flip() + 
+plot_theme + xlim(range=c(-1, 1)) +
+ylim(0,1) + ylab(" ") +
+theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) +
+ggtitle(title1)
+ # Histogram
+ p2 <- ggplot(ind.call.rate, aes(x=ind.call.rate)) +
+geom_histogram(bins=50,color=plot_colours[1], fill=plot_colours[2]) +
+coord_cartesian(xlim=c(0,1)) +
+xlab("Call rate") + ylab("Count") +
+plot_theme 
+ # Combine using package patchwork
+ p3 <- p1/p2 + plot_layout(heights=c(1, 4))
+ print(p3)
 
-#### Finish up
-
-Come back to it
+```
 
 ### Have some style! Programming with style
 
@@ -188,8 +263,6 @@ For more info on what constitutes good, readable, efficient code - Hadley Wickha
 As I'm sure many of you are aware - dartR's code is hosted on github - an opensource development platform for version management and control. This includes all of the base dependencies - such as dartR.base and dartRverse in addition to the expansion modules and experimental functions/versions being actively developed. 
 
 The manner in which this code is governed by a set of strict protocols (as mentioned above) - designed to protect the stability of the packages and ensure they're (relatively) bug free. This can be summarised as below: 
-
-INSERT IMAGE OF DARTR WORKFLOW 
 
 
 #### Repo's 
@@ -429,44 +502,6 @@ Looking at the dev page of our fork we can now see the dev branch has had a rece
 
 ## Exercise 
 Having now learned how to fork, push and pull to repositories - we can now practice our new developer skills! If you'd like you can fork my fork of the dartR.captive repo - dartR.testing and attempt to push your own changes to the dev branch. I will then go through these attempted pushes and accept them thus adding them to the dev branch of dartR.testing!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
