@@ -16,7 +16,7 @@ description: "Kioloa2 Relatedness Tutorial"
 ---
 
 *Session Presenters*
-![Ethan Halford](images/Ethan.jpg)
+![Ethan Halford](images/Ethan.jpg){width=25%}
 
 ```{r klippy, echo=FALSE, include=TRUE}
 klippy::klippy(position="right", color="black")
@@ -25,7 +25,8 @@ klippy::klippy(position="right", color="black")
 ```{r setup, include=FALSE}
 library(gbRd)
 library(tools)
-devtools::install_github("https://github.com/green-striped-gecko/dartR.captive/tree/dev_ethan")
+library(gridExtra)
+library(gridBase)
 library("dartR.captive")
 library(dartRverse)
 library(related)
@@ -643,7 +644,7 @@ incaTernSNP <- readRDS("data/incaTernSNP.rds")
 #### 1.2 Data filtering
 Next we can do some basic data QC - this should be trivial by now! 
 
-```{r,QC,exercise=T}
+```{r,QC,exercise=T,eval=FALSE}
 # Do a simple report of basics
 gl.report.allna()
 gl.report.callrate()
@@ -670,7 +671,7 @@ incaTernSNP <- gl.filter.sexlinked(incaTernSNP,
 #### 1.3 Data QC 
 Now we can check the composition of our population - just to ensure nothing is awry! 
 
-```{r,PCOA,exercise=T}
+```{r,PCOA,exercise=T,eval=FALSE}
 # Start with basic PCOA plot
 incaPCOA <- gl.pcoa(incaTernSNP,nfactors = "X")
 incaPCOAPlot <- gl.pcoa.plot("PCOA",incaTernSNP)
@@ -681,7 +682,7 @@ What do you think? Is it worth separating into groups or analysing as one?
 
 Next we can check the heterozygoity/inbreeding coefficient.
 
-```{r,hetCheck,exercise=T}
+```{r,hetCheck,exercise=T,eval=FALSE}
 # Start with basic PCOA plot
 gl.report.heterozygosity(incaTernSNP,method = "ind")
 
@@ -692,7 +693,7 @@ What do you think, is heterozygosity/inbreeding in excess?
 #### 1.4 Relatedness run
 Time to run gl.diagnostics.relatedness! We've written a skeleton, you fill in what you think each value should be. 
 
-```{r,gl_diag_run,exercise=T}
+```{r,gl_diag_run,exercise=T,eval=FALSE}
 # Start with basic PCOA plot
 incaTernrelated <- gl.diagnostics.relatedness(incaTernSNP, 
                                               cleanup = "T/F", 
