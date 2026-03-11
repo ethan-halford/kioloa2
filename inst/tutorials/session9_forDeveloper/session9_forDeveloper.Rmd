@@ -144,7 +144,7 @@ Roxygen2 is an R package used in the documentation of functions, primarily for t
 
 The next step is to define the function and its inputs:
 
-```{r,define_function}
+```{r,define_function_4}
 gl.filter.callrate <- function(x, 
 method = "loc", 
 threshold = 0.95, 
@@ -182,7 +182,7 @@ We now need to apply checks to the input parameters to ensure the user supplied 
 
 In addition you should apply your own parameter checks of user input. This ensures any errors that arise from incorrect formatting of data is explicitly mentioned as such in the function output. This avoids the outputiting of vague often verbose system errors that may arise instead and may be difficult for the user to debug. We can illustrate this with an example:
 
-```{r badexample,exercise=T}
+```{r badexample_5,exercise=T}
  # FUNCTION SPECIFIC ERROR CHECKING
 pkg <- "HardyWeinberg"
 if (!(requireNamespace(pkg, quietly = TRUE))) {
