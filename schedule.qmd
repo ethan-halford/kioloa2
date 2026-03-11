@@ -8,7 +8,7 @@ editor: visual
 *for a more detailed program see the* [More Info](useful.qmd) *section*
 
 | \#  | Day |     Time      |                         **Topic**                          |                                 Presenters                                 |
-|:---:|-----|:-------------:|:----------------------------------------------------------:|:--------------------------------------------------------------------------:|
+|:--------:|----------|:--------:|:----------------:|:-----------------------:|
 |  1  | Mon |  2 pm - 4 pm  |         [**Welcome, Intro dartR**](session01.qmd)          | Oliver Berry, Andrzej Killian, Arthur Georges, Bernd Gruber, Renee Catullo |
 |  2  |     | 5 pm -- 7 pm  | [**Pop Gen In Conservation & Restoration**](session02.qmd) |                 Bill Sherwin, Carlo Pacioni, Renee Catullo                 |
 |  3  | Tue | 9 am -- 11 am |                **Sequencing Technologies**                 |               Jason Carling, Andrew Kowalczyk, Renee Catullo               |

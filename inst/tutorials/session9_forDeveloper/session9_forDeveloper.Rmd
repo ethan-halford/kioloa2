@@ -26,10 +26,6 @@ library(dartRverse)
 
 ## dartR for the developer: Introduction to developing for the dartR package
 
-*Session Presenters*
-
-Ethan Halford and Arthur Georges
-
 ## Introduction
 
 ### Getting started with development - joining the dartR team
@@ -54,17 +50,14 @@ As such in this tutorial, we'll be providing an introduction as to the means by 
     -   Push/pull merge etc.
     -   forking directories
 -   **4. Example - writing basic function**
-    -   gl.something.basic - does ANYTHING
-    -   write basic function for printing or combining inputs something like that
+    -   gl.document - creates roxygen documentation
 -   **5. Github specifically for dartR**
     -   fork directory
     -   create local git repo on rstudio
-    -   create function - compile local copy - make sure package is installable - ie changes have broken the package
+    -   create function - compile local copy - make sure package is installable 
     -   commit/push to forked repo
     -   make pull/merge request from forked repo to original repo
--   **6. Common errors/hangups**
-    -   ie errors with local variables not being defined etc.
--   **7. Roundup/questions etc.**
+  - **6. Roundup/exercise**
 
 ### 1. Basics of development and the dartR style guide
 
@@ -144,11 +137,7 @@ Roxygen2 is an R package used in the documentation of functions, primarily for t
 
 The next step is to define the function and its inputs:
 
-<<<<<<< HEAD:inst/tutorials/session9_forDeveloper/sessionX_forDeveloper.Rmd
-```{r,define_function_2}
-=======
-```{r,define_function_4}
->>>>>>> main:inst/tutorials/session9_forDeveloper/session9_forDeveloper.Rmd
+```{r,define_function_4,eval=FALSE}
 gl.filter.callrate <- function(x, 
 method = "loc", 
 threshold = 0.95, 
@@ -168,7 +157,7 @@ Setting the verbosity allows the user to edit the verbosity of the output as req
 
 This value can either be set when calling the function such as:
 
-```{r,define_function,exercise=T}
+```{r,define_function,exercise=T,eval=FALSE}
 # SET VERBOSITY
 check_one <- gl.basic.stats(possums.gl,verbose = 4)
 ```
@@ -186,11 +175,7 @@ We now need to apply checks to the input parameters to ensure the user supplied 
 
 In addition you should apply your own parameter checks of user input. This ensures any errors that arise from incorrect formatting of data is explicitly mentioned as such in the function output. This avoids the outputiting of vague often verbose system errors that may arise instead and may be difficult for the user to debug. We can illustrate this with an example:
 
-<<<<<<< HEAD:inst/tutorials/session9_forDeveloper/sessionX_forDeveloper.Rmd
-```{r badexample_4,exercise=T}
-=======
-```{r badexample_5,exercise=T}
->>>>>>> main:inst/tutorials/session9_forDeveloper/session9_forDeveloper.Rmd
+```{r badexample_5,exercise=T,eval=FALSE}
  # FUNCTION SPECIFIC ERROR CHECKING
 pkg <- "HardyWeinberg"
 if (!(requireNamespace(pkg, quietly = TRUE))) {
@@ -203,7 +188,7 @@ if (!(requireNamespace(pkg, quietly = TRUE))) {
 
 Its important to flag the start of the script- to ensure the output displays when the job has commenced. We can do this with the utils.flag.start function:
 
-```{r badexample,exercise=T}
+```{r badexample,exercise=T,eval=FALSE}
 # FLAG SCRIPT START
    funname <- match.call()[[1]]
    utils.flag.start(func=funname,v=verbose)
@@ -211,7 +196,7 @@ Its important to flag the start of the script- to ensure the output displays whe
 
 In addition we also flag the start of the function with a \# DO THE JOB tag: such as:
 
-```{r badexample_2}
+```{r badexample_2,eval=FALSE}
 thingy <- function(a,b){
   
   if(!(a == "num" | b == "num")){
@@ -229,7 +214,7 @@ thingy <- function(a,b){
 #### Display output
 We display graphical output using ggplot compatible plots, which scale nicely depending on the RStudio configuration particular users have in place. To do this we use packages ggplot and patchwork (see https://patchwork.data-imaginist.com) For example:
 
-```{r badexample_3,exercise=T}
+```{r badexample_3,exercise=T,eval=FALSE}
 # DISPLAY GRAPHICS
  # Boxplot
  p1 <- ggplot(ind.call.rate, aes(y=ind.call.rate)) +
@@ -263,11 +248,6 @@ For more info on what constitutes good, readable, efficient code - Hadley Wickha
 
 
 ### 2. Introduction to Github 
-    -   Repo's
-    -   Push/pull merge etc.
-    -   forking directories
-
-
 As I'm sure many of you are aware - dartR's code is hosted on github - an opensource development platform for version management and control. This includes all of the base dependencies - such as dartR.base and dartRverse in addition to the expansion modules and experimental functions/versions being actively developed. 
 
 The manner in which this code is governed by a set of strict protocols (as mentioned above) - designed to protect the stability of the packages and ensure they're (relatively) bug free. This can be summarised as below: 
@@ -312,7 +292,7 @@ This will then take you a page where you can specify how you'd like to fork the 
 ![](images/Fork.png){width=100%}
 
 
-### 3. Example function - gl.does.something
+### 3. Example function - gl.document
 Having introduced you to the basic of writing functions for dartR and github we'll now go through the process of writing our own function and then pushing it to a fork. 
 
 

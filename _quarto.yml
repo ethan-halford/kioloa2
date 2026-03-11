@@ -8,14 +8,8 @@ book:
   chapters:
   - index.qmd
   - schedule.qmd
-  - inst/tutorials/session0/session0.rmd
-  - inst/tutorials/session1/session1.rmd
-  - inst/tutorials/session2_sim/session2_sim.rmd
-  - inst/tutorials/session15/session15_update.rmd
-  - inst/tutorials/session9_forDeveloper/sessionX_forDeveloper.Rmd
-  - inst/tutorials/session11/session11.Rmd
-  - inst/tutorials/Session_W3-Sex-Linked_Markers/sessionW03.Rmd
-  - inst/tutorials/Session_W6-Genetic_Structure/Floriaan_Devloo-Delva_sessionW04.Rmd
+  - inst/tutorials/session9_forDeveloper/session9_forDeveloper.Rmd
+  - inst/tutorials/session15/session15_update.Rmd
 format:
   html:
     toc: true
